@@ -12,7 +12,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=Game(name="with humans"))
+    await client.change_presence(game=Game(name="with póngs"))
     print("Logged in as " + client.user.name)
 
 
@@ -28,11 +28,30 @@ async def greet():
 @client.command(help='Chửi chết con đĩ mẹ nó.',
                 description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
                 brief='Note: Chỉ được chửi một lần một đứa')
-async def chửi(context):
+async def chửi(*person):
+    if len(person) > 1:
+        person = ' '.join(person)
+    else:
+        person = person[0]
     cursed_sentences = [
-        'con đĩ mẹ mày'
+        'con đĩ mẹ mày',
+        'nứng lồn quá chơi mình đi má ai rảnh đâu mà chơi',
+        'dô diên nứng lồn hả đĩ chó',
+        'cái lồn con đĩ mẹ mày',
+        'muốn dzạt cái mỏ lồn mày ghê',
+        'dòng thứ chổi phù thủy tao nhét dô lồn chết con đĩ mẹ mày nghe chưa',
+        'póng mà giả trai đụ nai đụ bò',
+        'tưởng đây ngu chắc hỏng pít tụi pây póng mà gồng',
+        'nói chiện như cái lông lồn dị đó',
+        'nói chiện như lồn trệt dưới mương',
+        'bạn nói như dị là bạn xạo lồn',
+        'con póng khùng, con póng nứng lồn',
+        'có xạo lồn quá hong dạ',
+        'thằng cha con đĩ mẹ mày',
+        'dô diên mày nứng lồn hả tao xé lồn mày ra',
+        
     ]
-    await client.say(random.choice(cursed_sentences) + ' ' + context.message.author.mention)
+    await client.say(random.choice(cursed_sentences) + ' ' + person)
 
 
 @client.command(help='Bot làm bình phương cho nèk.',
@@ -49,28 +68,6 @@ async def mul(*args):
     for arg in args:
         result *= float(arg)
     await client.say('Ra ' + str(result) + ' nè.')
-
-
-@client.command(name='8ball',
-                description="Answers a yes/no question.",
-                brief="Answers from the beyond.",
-                aliases=['eight_ball', 'eightball', '8-ball'],
-                pass_context=True)
-async def eight_ball(context):
-    possible_responses = [
-        'That is a resounding no',
-        'It is not looking likely',
-        'Too hard to tell',
-        'It is quite possible',
-        'Definitely',
-    ]
-    print('message:',context.message)
-    print('author:', context.message.author, type(context.message.author))
-    print('mention:', context.message.author.mention, type(context.message.author.mention))
-    for mem in discord.member.Member:
-        if mem == 'Công An#4377':
-            print('this', mem)
-    await client.say(random.choice(possible_responses) + ", " + context.message.author.mention)
 
 
 @client.command(help='Bot cho coi giá bitcoin nèk.')
