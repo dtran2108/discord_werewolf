@@ -27,7 +27,7 @@ async def greet():
 
 @client.command(help='Chửi chết con đĩ mẹ nó.',
                 description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
-                brief='Note: Chỉ được chửi một lần một đứa')
+                )
 async def chửi(*person):
     if len(person) > 1:
         person = ' '.join(person)
