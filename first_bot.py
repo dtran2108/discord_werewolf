@@ -106,6 +106,7 @@ async def x(context):
         response = await client.wait_for_message(author=context.message.author)
         print(context.message.author)
         print(help(response))
+        print(response.content)
         # for e in response:
         #     print(e)
         # print(help(response))
