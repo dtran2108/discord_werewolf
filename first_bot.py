@@ -140,15 +140,11 @@ async def x(context):
             'draw': bot_choice + '\nHòa rồi má.'
             }
             if mes.lower().strip() not in options:
-                await client.say('Chị ra gì? ' + context.message.author.mention)
-                response = await client.wait_for_message(author=context.message.author)
-                mes = response.content
+                mes = await get_message(context)
                 await play_rock_paper_scissors(mes, bot_choice, bot_response)
             else:
                 await play_rock_paper_scissors(mes, bot_choice, bot_response)
-            await client.say('Lại không? ' + context.message.author.mention)
-            response = await client.wait_for_message(author=context.message.author)
-            mes = response.content
+            mes = await get_message(context)
         await client.say('bai :)')
     except Exception as e:
         await client.say('chưa chơi được :(')
