@@ -11,24 +11,24 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-async def play_rock_paper_scissors(mes, bot_choice, bot_response):
+def play_rock_paper_scissors(mes, bot_choice, bot_response):
     if mes.lower().strip() == 'kéo':
         if bot_choice == 'búa':
-            await client.say(bot_response['win'])
+            client.say(bot_response['win'])
         elif bot_choice == 'bao':
-            await client.say(bot_response['lose'])
+            client.say(bot_response['lose'])
     elif mes.lower().strip() == 'búa':
         if bot_choice == 'bao':
-            await client.say(bot_response['win'])
+            client.say(bot_response['win'])
         elif bot_choice == 'kéo':
-            await client.say(bot_response['lose'])
+            client.say(bot_response['lose'])
     elif mes.lower().strip() == 'bao':
         if bot_choice == 'kéo':
-            await client.say(bot_response['win'])
+            client.say(bot_response['win'])
         elif bot_choice == 'búa':
-            await client.say(bot_response['lose'])
+            client.say(bot_response['lose'])
     else:
-        await client.say('Nói dì dạ hong hỉu?')
+        client.say('Nói dì dạ hong hỉu?')
 
 
 @client.event
