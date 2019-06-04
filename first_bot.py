@@ -91,8 +91,8 @@ async def usd():
         await client.say("Hiện là {} đồng nhoe".format(response['USD_VND']))
 
 
-@client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_content=True)
-async def x():
+@client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
+async def x(context):
     options = ['kéo', 'búa', 'bao']
     bot_choice = random.choice(options)
     bot_response = {
@@ -100,8 +100,8 @@ async def x():
         'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
     }
     await client.say('Chị ra gì?')
-    response = client.wait_for_message(author='Công An#4377')
-    print(response, type(response))
+    response = client.wait_for_message(author=context.message.author)
+    print(response.clean_content, type(response))
     print(help(response))
     if response == 'kéo':
         if bot_choice == 'búa':
