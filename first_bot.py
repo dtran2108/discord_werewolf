@@ -11,7 +11,7 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-def play_rock_paper_scissors(mes, bot_choice):
+def play_rock_paper_scissors(mes, bot_choice, bot_response):
     if mes.lower().strip() == 'kéo':
         if bot_choice == 'búa':
             await client.say(bot_response['win'])
@@ -131,9 +131,9 @@ async def x(context):
                 await client.say('Chị ra gì? ' + context.message.author.mention)
                 response = await client.wait_for_message(author=context.message.author)
                 mes = response.content
-                play_rock_paper_scissors(mes, bot_choice)
+                play_rock_paper_scissors(mes, bot_choice, bot_response)
             else:
-                play_rock_paper_scissors(mes, bot_choice)
+                play_rock_paper_scissors(mes, bot_choice, bot_response)
             await client.say('Lại không? ' + context.message.author.mention)
             response = await client.wait_for_message(author=context.message.author)
             mes = response.content
