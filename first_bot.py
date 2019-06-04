@@ -128,7 +128,7 @@ async def usd():
 
 
 @client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True,
-                description='type `!x` to play with me. I\'m so lonely. Crying')
+                description='Note: gõ !x 1 lần thôi chơi với tui nè không có chơi với ai hết :)')
 async def x(context):
     try:
         options = ['kéo', 'búa', 'bao']       
