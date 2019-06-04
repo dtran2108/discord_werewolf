@@ -16,12 +16,6 @@ async def on_ready():
     print("Logged in as " + client.user.name)
 
 
-@client.command(help='Cho coi ping của tui.')
-async def ping():
-    latency = client.latency
-    await client.say('Ping: {}'.format(latency))
-
-
 @client.command(help='Bot gửi lời chào đến cả nhà iu.')
 async def greet():
     possible_responses = [
@@ -95,6 +89,35 @@ async def usd():
         response = await raw_response.text()
         response = json.loads(response)
         await client.say("Hiện là {} đồng nhoe".format(response['USD_VND']))
+
+
+@client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_content=True)
+async def x(ctx):
+    options = ['kéo', 'búa', 'bao']
+    bot_choice = random.choice(options)
+    bot_response = {
+        'win': 'Tao ra {}, thắng mày rồi nhe.'.format(bot_choice)
+        'lose': 'Tao ra {}, hên thôi nhường mày 1 lần.'.format(bot_choice)
+    }
+    await client.say('Chị ra gì?')
+    response = client.wait_for_message(author=ctx.message.author, timeout=30)
+    if response.clean_content.lower() == 'kéo'
+        if bot_choice == 'búa':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'bao':
+            await client.say(bot_response['lose'])
+    elif response.clean_content.lower() == 'búa'
+        if bot_choice == 'bao':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'kéo':
+            await client.say(bot_response['lose'])
+    elif response.clean_content.lower() == 'bao'
+        if bot_choice == 'kéo':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'búa':
+            await client.say(bot_response['lose'])
+    else:
+        await client.say('Nói gì dạ hong hỉu?')
 
 
 async def list_servers():
