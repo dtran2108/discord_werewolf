@@ -99,8 +99,8 @@ async def x(context):
         options = ['kéo', 'búa', 'bao']
         bot_choice = random.choice(options)
         bot_response = {
-            'win': 'Tao ra ' + bot_choice + ', thắng mày rồi nhe.',
-            'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
+            'win': bot_choice + '\nhehe ^^',
+            'lose': bot_choice + '\ni chòi cái đồ ăn gian'
         }
         await client.say('Chị ra gì? ' + context.message.author.mention)
         response = await client.wait_for_message(author=context.message.author)
