@@ -11,6 +11,13 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
 
+async def get_message(context):
+    await client.say('Chị ra gì? ' + context.message.author.mention)
+    response = await client.wait_for_message(author=context.message.author)
+    mes = response.content
+    return mes
+
+
 def play_rock_paper_scissors(mes, bot_choice, bot_response):
     if mes.lower().strip() == 'kéo':
         if bot_choice == 'búa':
@@ -124,9 +131,7 @@ async def usd():
 async def x(context):
     try:
         options = ['kéo', 'búa', 'bao']       
-        await client.say('Chị ra gì? ' + context.message.author.mention)
-        response = await client.wait_for_message(author=context.message.author)
-        mes = response.content
+        mes = await get_message(context)
         while mes != 'không':
             bot_choice = random.choice(options)
             bot_response = {
