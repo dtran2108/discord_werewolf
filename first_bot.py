@@ -96,8 +96,8 @@ async def x(ctx):
     options = ['kéo', 'búa', 'bao']
     bot_choice = random.choice(options)
     bot_response = {
-        'win': 'Tao ra {}, thắng mày rồi nhe.'.format(bot_choice),
-        'lose': 'Tao ra {}, hên thôi nhường mày 1 lần.'.format(bot_choice)
+        'win': 'Tao ra ' + bot_choice + ', thắng mày rồi nhe.',
+        'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
     }
     await client.say('Chị ra gì?')
     response = client.wait_for_message(author=ctx.message.author, timeout=30)
