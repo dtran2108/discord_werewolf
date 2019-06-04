@@ -22,8 +22,9 @@ def play_rock_paper_scissors(mes, bot_choice, bot_response):
         elif bot_choice == 'bao':
             print('1:2')
             return client.say(bot_response['lose'])
-        # else:
-        #     return client.say(bot_response['draw'])
+        else:
+            print('1:3')
+            return client.say(bot_response['draw'])
     elif mes.lower().strip() == 'búa':
         print(2)
         if bot_choice == 'bao':
