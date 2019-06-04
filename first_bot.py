@@ -127,6 +127,7 @@ async def x(context):
         response = await client.wait_for_message(author=context.message.author)
         mes = response.content
         while mes != 'không':
+            bot_choice = random.choice(options)
             if mes.lower().strip() not in options:
                 await client.say('Chị ra gì? ' + context.message.author.mention)
                 response = await client.wait_for_message(author=context.message.author)
