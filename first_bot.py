@@ -136,17 +136,17 @@ async def usd():
 @client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
 async def x(context):
     try:
-        options = ['kéo', 'búa', 'bao']
-        bot_response = {
-            'win': bot_choice + '\nò ó o ^^\ncon gà ' + context.message.author.mention,
-            'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<',
-            'draw': bot_choice + '\nHòa rồi má.'
-        }
+        options = ['kéo', 'búa', 'bao']       
         await client.say('Chị ra gì? ' + context.message.author.mention)
         response = await client.wait_for_message(author=context.message.author)
         mes = response.content
         while mes != 'không':
             bot_choice = random.choice(options)
+            bot_response = {
+            'win': bot_choice + '\nò ó o ^^\ncon gà ' + context.message.author.mention,
+            'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<',
+            'draw': bot_choice + '\nHòa rồi má.'
+            }
             print('here:', bot_choice)
             if mes.lower().strip() not in options:
                 await client.say('Chị ra gì? ' + context.message.author.mention)
