@@ -103,7 +103,7 @@ async def x(context):
             'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
         }
         await client.say('Chị ra gì?')
-        response = client.wait_for('message')
+        response = client.wait_for_message(author=context.author)
         print(response, type(response))
         # print(help(response))
         if response == 'kéo':
