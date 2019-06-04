@@ -131,9 +131,9 @@ async def x(context):
                 await client.say('Chị ra gì? ' + context.message.author.mention)
                 response = await client.wait_for_message(author=context.message.author)
                 mes = response.content
-                play_rock_paper_scissors(mes, bot_choice, bot_response)
+                await play_rock_paper_scissors(mes, bot_choice, bot_response)
             else:
-                play_rock_paper_scissors(mes, bot_choice, bot_response)
+                await play_rock_paper_scissors(mes, bot_choice, bot_response)
             await client.say('Lại không? ' + context.message.author.mention)
             response = await client.wait_for_message(author=context.message.author)
             mes = response.content
