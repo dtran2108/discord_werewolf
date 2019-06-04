@@ -16,6 +16,12 @@ async def on_ready():
     print("Logged in as " + client.user.name)
 
 
+@client.command(help='Cho coi ping của tui.')
+async def ping():
+    latency = client.latency
+    await client.say('Ping: {}'.format(latency))
+
+
 @client.command(help='Bot gửi lời chào đến cả nhà iu.')
 async def greet():
     possible_responses = [
