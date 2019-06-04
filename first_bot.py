@@ -11,8 +11,8 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-async def get_message(context):
-    await client.say('Chị ra gì? ' + context.message.author.mention)
+async def get_message(context, question):
+    await client.say(question + context.message.author.mention)
     response = await client.wait_for_message(author=context.message.author)
     mes = response.content
     return mes
@@ -131,7 +131,7 @@ async def usd():
 async def x(context):
     try:
         options = ['kéo', 'búa', 'bao']       
-        mes = await get_message(context)
+        mes = await get_message(context, 'Chị ra gì? ')
         while mes != 'không':
             bot_choice = random.choice(options)
             bot_response = {
@@ -140,11 +140,11 @@ async def x(context):
             'draw': bot_choice + '\nHòa rồi má.'
             }
             if mes.lower().strip() not in options:
-                mes = await get_message(context)
+                mes = await get_message(context, 'Chị ra gì? ')
                 await play_rock_paper_scissors(mes, bot_choice, bot_response)
             else:
                 await play_rock_paper_scissors(mes, bot_choice, bot_response)
-            mes = await get_message(context)
+            mes = await get_message(context, 'Lại không? ')
         await client.say('bai :)')
     except Exception as e:
         await client.say('chưa chơi được :(')
