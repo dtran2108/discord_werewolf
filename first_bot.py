@@ -12,41 +12,28 @@ client = Bot(command_prefix=BOT_PREFIX)
 
 
 def play_rock_paper_scissors(mes, bot_choice, bot_response):
-    print('người ra:', mes)
-    print('bot ra:', bot_choice)
     if mes.lower().strip() == 'kéo':
-        print(1)
         if bot_choice == 'búa':
-            print('1:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'bao':
-            print('1:2')
             return client.say(bot_response['lose'])
         else:
-            print('1:3')
             return client.say(bot_response['draw'])
     elif mes.lower().strip() == 'búa':
-        print(2)
         if bot_choice == 'bao':
-            print('2:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'kéo':
-            print('2:2')
             return client.say(bot_response['lose'])
-        # else:
-        #     return client.say(bot_response['draw'])
+        else:
+            return client.say(bot_response['draw'])
     elif mes.lower().strip() == 'bao':
-        print(3)
         if bot_choice == 'kéo':
-            print('3:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'búa':
-            print('3:2')
             return client.say(bot_response['lose'])
-        # else:
-        #     return client.say(bot_response['draw'])
+        else:
+            return client.say(bot_response['draw'])
     else:
-        print(4)
         return client.say('Nói dì dạ hong hỉu?')
 
 
@@ -147,7 +134,6 @@ async def x(context):
             'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<',
             'draw': bot_choice + '\nHòa rồi má.'
             }
-            print('here:', bot_choice)
             if mes.lower().strip() not in options:
                 await client.say('Chị ra gì? ' + context.message.author.mention)
                 response = await client.wait_for_message(author=context.message.author)
