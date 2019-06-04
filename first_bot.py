@@ -110,17 +110,17 @@ async def x(context):
         # for e in response:
         #     print(e)
         # print(help(response))
-        if response == 'kéo':
+        if response.content == 'kéo':
             if bot_choice == 'búa':
                 await client.say(bot_response['win'])
             elif bot_choice == 'bao':
                 await client.say(bot_response['lose'])
-        elif response == 'búa':
+        elif response.content == 'búa':
             if bot_choice == 'bao':
                 await client.say(bot_response['win'])
             elif bot_choice == 'kéo':
                 await client.say(bot_response['lose'])
-        elif response == 'bao':
+        elif response.content == 'bao':
             if bot_choice == 'kéo':
                 await client.say(bot_response['win'])
             elif bot_choice == 'búa':
