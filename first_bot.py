@@ -10,6 +10,27 @@ BOT_PREFIX = ("!")
 TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
+
+def play_rock_paper_scissors(mes, bot_choice):
+    if mes.lower().strip() == 'kéo':
+        if bot_choice == 'búa':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'bao':
+            await client.say(bot_response['lose'])
+    elif mes.lower().strip() == 'búa':
+        if bot_choice == 'bao':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'kéo':
+            await client.say(bot_response['lose'])
+    elif mes.lower().strip() == 'bao':
+        if bot_choice == 'kéo':
+            await client.say(bot_response['win'])
+        elif bot_choice == 'búa':
+            await client.say(bot_response['lose'])
+    else:
+        await client.say('Nói dì dạ hong hỉu?')
+
+
 @client.event
 async def on_ready():
     await client.change_presence(game=Game(name="with póngs"))
@@ -99,58 +120,20 @@ async def x(context):
         options = ['kéo', 'búa', 'bao']
         bot_choice = random.choice(options)
         bot_response = {
-            'win': bot_choice + '\nhehe ò ó o ^^\n con gà ' + context.message.author.mention,
+            'win': bot_choice + '\nò ó o ^^\ncon gà ' + context.message.author.mention,
             'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<'
         }
         await client.say('Chị ra gì? ' + context.message.author.mention)
         response = await client.wait_for_message(author=context.message.author)
         mes = response.content
         while mes != 'không':
-        # print(context.message.author)
-        # print(help(response))
-        # print(response.content)
-        # for e in response:
-        #     print(e)
-        # print(help(response))
             if mes.lower().strip() not in options:
                 await client.say('Chị ra gì? ' + context.message.author.mention)
                 response = await client.wait_for_message(author=context.message.author)
                 mes = response.content
-                if mes.lower().strip() == 'kéo':
-                    if bot_choice == 'búa':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'bao':
-                        await client.say(bot_response['lose'])
-                elif mes.lower().strip() == 'búa':
-                    if bot_choice == 'bao':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'kéo':
-                        await client.say(bot_response['lose'])
-                elif mes.lower().strip() == 'bao':
-                    if bot_choice == 'kéo':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'búa':
-                        await client.say(bot_response['lose'])
-                else:
-                    await client.say('Nói dì dạ hong hỉu?')
+                play_rock_paper_scissors(mes, bot_choice)
             else:
-                if mes.lower().strip() == 'kéo':
-                    if bot_choice == 'búa':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'bao':
-                        await client.say(bot_response['lose'])
-                elif mes.lower().strip() == 'búa':
-                    if bot_choice == 'bao':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'kéo':
-                        await client.say(bot_response['lose'])
-                elif mes.lower().strip() == 'bao':
-                    if bot_choice == 'kéo':
-                        await client.say(bot_response['win'])
-                    elif bot_choice == 'búa':
-                        await client.say(bot_response['lose'])
-                else:
-                    await client.say('Nói dì dạ hong hỉu?')
+                play_rock_paper_scissors(mes, bot_choice)
             await client.say('Lại không? ' + context.message.author.mention)
             response = await client.wait_for_message(author=context.message.author)
             mes = response.content
@@ -158,22 +141,6 @@ async def x(context):
     except Exception as e:
         await client.say('chưa chơi được :(')
         print(e)
-
-
-# @client.command(name='8ball',
-#                 description="Answers a yes/no question.",
-#                 brief="Answers from the beyond.",
-#                 aliases=['eight_ball', 'eightball', '8-ball'],
-#                 pass_context=True)
-# async def eight_ball(context):
-#     possible_responses = [
-#         'That is a resounding no',
-#         'It is not looking likely',
-#         'Too hard to tell',
-#         'It is quite possible',
-#         'Definitely',
-#     ]
-#     await client.say(random.choice(possible_responses) + ", " + context.message.author.mention)
 
 
 async def list_servers():
