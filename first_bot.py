@@ -101,17 +101,18 @@ async def x():
     }
     await client.say('Chị ra gì?')
     response = client.wait_for_message()
-    if response.clean_content.lower() == 'kéo':
+    print(response, type(response))
+    if response == 'kéo':
         if bot_choice == 'búa':
             await client.say(bot_response['win'])
         elif bot_choice == 'bao':
             await client.say(bot_response['lose'])
-    elif response.clean_content.lower() == 'búa':
+    elif response == 'búa':
         if bot_choice == 'bao':
             await client.say(bot_response['win'])
         elif bot_choice == 'kéo':
             await client.say(bot_response['lose'])
-    elif response.clean_content.lower() == 'bao':
+    elif response == 'bao':
         if bot_choice == 'kéo':
             await client.say(bot_response['win'])
         elif bot_choice == 'búa':
