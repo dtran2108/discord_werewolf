@@ -99,8 +99,8 @@ async def x(context):
         options = ['kéo', 'búa', 'bao']
         bot_choice = random.choice(options)
         bot_response = {
-            'win': bot_choice + '\nhehe ^^',
-            'lose': bot_choice + '\ni chòi cái đồ ăn gian này'
+            'win': bot_choice + '\nhehe ò ó o ^^\n con gà ' + context.message.author.mention,
+            'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<'
         }
         await client.say('Chị ra gì? ' + context.message.author.mention)
         response = await client.wait_for_message(author=context.message.author)
@@ -112,26 +112,49 @@ async def x(context):
         # for e in response:
         #     print(e)
         # print(help(response))
-            if mes.lower().strip() == 'kéo':
-                if bot_choice == 'búa':
-                    await client.say(bot_response['win'])
-                elif bot_choice == 'bao':
-                    await client.say(bot_response['lose'])
-            elif mes.lower().strip() == 'búa':
-                if bot_choice == 'bao':
-                    await client.say(bot_response['win'])
-                elif bot_choice == 'kéo':
-                    await client.say(bot_response['lose'])
-            elif mes.lower().strip() == 'bao':
-                if bot_choice == 'kéo':
-                    await client.say(bot_response['win'])
-                elif bot_choice == 'búa':
-                    await client.say(bot_response['lose'])
+            if mes.lower().strip() not in options:
+                await client.say('Chị ra gì? ' + context.message.author.mention)
+                response = await client.wait_for_message(author=context.message.author)
+                mes = response.content
+                if mes.lower().strip() == 'kéo':
+                    if bot_choice == 'búa':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'bao':
+                        await client.say(bot_response['lose'])
+                elif mes.lower().strip() == 'búa':
+                    if bot_choice == 'bao':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'kéo':
+                        await client.say(bot_response['lose'])
+                elif mes.lower().strip() == 'bao':
+                    if bot_choice == 'kéo':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'búa':
+                        await client.say(bot_response['lose'])
+                else:
+                    await client.say('Nói dì dạ hong hỉu?')
             else:
-                await client.say('Nói dì dạ hong hỉu?')
-            await client.say('Lại không?')
+                if mes.lower().strip() == 'kéo':
+                    if bot_choice == 'búa':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'bao':
+                        await client.say(bot_response['lose'])
+                elif mes.lower().strip() == 'búa':
+                    if bot_choice == 'bao':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'kéo':
+                        await client.say(bot_response['lose'])
+                elif mes.lower().strip() == 'bao':
+                    if bot_choice == 'kéo':
+                        await client.say(bot_response['win'])
+                    elif bot_choice == 'búa':
+                        await client.say(bot_response['lose'])
+                else:
+                    await client.say('Nói dì dạ hong hỉu?')
+            await client.say('Lại không? ' + context.message.author.mention)
             response = await client.wait_for_message(author=context.message.author)
             mes = response.content
+        await client.say('bai :)')
     except Exception as e:
         await client.say('chưa chơi được :(')
         print(e)
