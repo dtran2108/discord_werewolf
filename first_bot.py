@@ -17,24 +17,30 @@ def play_rock_paper_scissors(mes, bot_choice, bot_response):
     if mes.lower().strip() == 'kéo':
         print(1)
         if bot_choice == 'búa':
+            print('1:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'bao':
+            print('1:2')
             return client.say(bot_response['lose'])
         # else:
         #     return client.say(bot_response['draw'])
     elif mes.lower().strip() == 'búa':
         print(2)
         if bot_choice == 'bao':
+            print('2:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'kéo':
+            print('2:2')
             return client.say(bot_response['lose'])
         # else:
         #     return client.say(bot_response['draw'])
     elif mes.lower().strip() == 'bao':
         print(3)
         if bot_choice == 'kéo':
+            print('3:1')
             return client.say(bot_response['win'])
         elif bot_choice == 'búa':
+            print('3:2')
             return client.say(bot_response['lose'])
         # else:
         #     return client.say(bot_response['draw'])
