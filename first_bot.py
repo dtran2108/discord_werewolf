@@ -93,59 +93,65 @@ async def usd():
         await client.say("Hiện là {} đồng nhoe".format(response['USD_VND']))
 
 
-@client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
+@client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
 async def x(context):
     try:
         options = ['kéo', 'búa', 'bao']
         bot_choice = random.choice(options)
         bot_response = {
             'win': bot_choice + '\nhehe ^^',
-            'lose': bot_choice + '\ni chòi cái đồ ăn gian'
+            'lose': bot_choice + '\ni chòi cái đồ ăn gian này'
         }
         await client.say('Chị ra gì? ' + context.message.author.mention)
         response = await client.wait_for_message(author=context.message.author)
-        print(context.message.author)
-        print(help(response))
-        print(response.content)
+        mes = response.content
+        while mes != 'không':
+        # print(context.message.author)
+        # print(help(response))
+        # print(response.content)
         # for e in response:
         #     print(e)
         # print(help(response))
-        if response.content == 'kéo':
-            if bot_choice == 'búa':
-                await client.say(bot_response['win'])
-            elif bot_choice == 'bao':
-                await client.say(bot_response['lose'])
-        elif response.content == 'búa':
-            if bot_choice == 'bao':
-                await client.say(bot_response['win'])
-            elif bot_choice == 'kéo':
-                await client.say(bot_response['lose'])
-        elif response.content == 'bao':
-            if bot_choice == 'kéo':
-                await client.say(bot_response['win'])
-            elif bot_choice == 'búa':
-                await client.say(bot_response['lose'])
-        else:
-            await client.say('Nói dì dạ hong hỉu?')
+            if mes.lower().strip() == 'kéo':
+                if bot_choice == 'búa':
+                    await client.say(bot_response['win'])
+                elif bot_choice == 'bao':
+                    await client.say(bot_response['lose'])
+            elif mes.lower().strip() == 'búa':
+                if bot_choice == 'bao':
+                    await client.say(bot_response['win'])
+                elif bot_choice == 'kéo':
+                    await client.say(bot_response['lose'])
+            elif mes.lower().strip() == 'bao':
+                if bot_choice == 'kéo':
+                    await client.say(bot_response['win'])
+                elif bot_choice == 'búa':
+                    await client.say(bot_response['lose'])
+            else:
+                await client.say('Nói dì dạ hong hỉu?')
+            finally:
+                await client.say('Lại không?')
+                response = await client.wait_for_message(author=context.message.author)
+                mes = response.content
     except Exception as e:
         await client.say('chưa chơi được :(')
         print(e)
 
 
-@client.command(name='8ball',
-                description="Answers a yes/no question.",
-                brief="Answers from the beyond.",
-                aliases=['eight_ball', 'eightball', '8-ball'],
-                pass_context=True)
-async def eight_ball(context):
-    possible_responses = [
-        'That is a resounding no',
-        'It is not looking likely',
-        'Too hard to tell',
-        'It is quite possible',
-        'Definitely',
-    ]
-    await client.say(random.choice(possible_responses) + ", " + context.message.author.mention)
+# @client.command(name='8ball',
+#                 description="Answers a yes/no question.",
+#                 brief="Answers from the beyond.",
+#                 aliases=['eight_ball', 'eightball', '8-ball'],
+#                 pass_context=True)
+# async def eight_ball(context):
+#     possible_responses = [
+#         'That is a resounding no',
+#         'It is not looking likely',
+#         'Too hard to tell',
+#         'It is quite possible',
+#         'Definitely',
+#     ]
+#     await client.say(random.choice(possible_responses) + ", " + context.message.author.mention)
 
 
 async def list_servers():
