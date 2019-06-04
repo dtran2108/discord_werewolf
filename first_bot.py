@@ -92,7 +92,7 @@ async def usd():
 
 
 @client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_content=True)
-async def x(ctx):
+async def x():
     options = ['kéo', 'búa', 'bao']
     bot_choice = random.choice(options)
     bot_response = {
@@ -100,7 +100,7 @@ async def x(ctx):
         'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
     }
     await client.say('Chị ra gì?')
-    response = client.wait_for_message(author=ctx.message.author, timeout=30)
+    response = client.wait_for_message().strip()
     if response.clean_content.lower() == 'kéo':
         if bot_choice == 'búa':
             await client.say(bot_response['win'])
@@ -117,7 +117,7 @@ async def x(ctx):
         elif bot_choice == 'búa':
             await client.say(bot_response['lose'])
     else:
-        await client.say('Nói gì dạ hong hỉu?')
+        await client.say('Nói dì dạ hong hỉu?')
 
 
 async def list_servers():
