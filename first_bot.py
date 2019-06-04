@@ -31,8 +31,10 @@ async def greet():
 async def chửi(*person):
     if len(person) > 1:
         person = ' '.join(person)
-    else:
+    elif len(person) == 1:
         person = person[0]
+    else:
+        await client.say('Chửi ai má?')
     cursed_sentences = [
         'con đĩ mẹ mày',
         'nứng lồn quá chơi mình đi má ai rảnh đâu mà chơi',
