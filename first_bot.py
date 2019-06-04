@@ -95,33 +95,36 @@ async def usd():
 
 @client.command(help='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
 async def x(context):
-    options = ['kéo', 'búa', 'bao']
-    bot_choice = random.choice(options)
-    bot_response = {
-        'win': 'Tao ra ' + bot_choice + ', thắng mày rồi nhe.',
-        'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
-    }
-    await client.say('Chị ra gì?')
-    response = client.wait_for('message')
-    print(response, type(response))
-    # print(help(response))
-    if response == 'kéo':
-        if bot_choice == 'búa':
-            await client.say(bot_response['win'])
-        elif bot_choice == 'bao':
-            await client.say(bot_response['lose'])
-    elif response == 'búa':
-        if bot_choice == 'bao':
-            await client.say(bot_response['win'])
-        elif bot_choice == 'kéo':
-            await client.say(bot_response['lose'])
-    elif response == 'bao':
-        if bot_choice == 'kéo':
-            await client.say(bot_response['win'])
-        elif bot_choice == 'búa':
-            await client.say(bot_response['lose'])
-    else:
-        await client.say('Nói dì dạ hong hỉu?')
+    try:
+        options = ['kéo', 'búa', 'bao']
+        bot_choice = random.choice(options)
+        bot_response = {
+            'win': 'Tao ra ' + bot_choice + ', thắng mày rồi nhe.',
+            'lose': 'Tao ra ' + bot_choice + ', hên thôi nhường mày 1 lần.'
+        }
+        await client.say('Chị ra gì?')
+        response = client.wait_for('message')
+        print(response, type(response))
+        # print(help(response))
+        if response == 'kéo':
+            if bot_choice == 'búa':
+                await client.say(bot_response['win'])
+            elif bot_choice == 'bao':
+                await client.say(bot_response['lose'])
+        elif response == 'búa':
+            if bot_choice == 'bao':
+                await client.say(bot_response['win'])
+            elif bot_choice == 'kéo':
+                await client.say(bot_response['lose'])
+        elif response == 'bao':
+            if bot_choice == 'kéo':
+                await client.say(bot_response['win'])
+            elif bot_choice == 'búa':
+                await client.say(bot_response['lose'])
+        else:
+            await client.say('Nói dì dạ hong hỉu?')
+    except Exception:
+        await client.say('chưa chơi được :(')
 
 
 @client.command(name='8ball',
