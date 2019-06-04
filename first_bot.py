@@ -123,8 +123,9 @@ async def x(context):
                 await client.say(bot_response['lose'])
         else:
             await client.say('Nói dì dạ hong hỉu?')
-    except Exception:
+    except Exception as e:
         await client.say('chưa chơi được :(')
+        print(e)
 
 
 @client.command(name='8ball',
