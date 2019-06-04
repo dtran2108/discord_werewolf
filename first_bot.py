@@ -129,10 +129,9 @@ async def x(context):
                     await client.say(bot_response['lose'])
             else:
                 await client.say('Nói dì dạ hong hỉu?')
-            finally:
-                await client.say('Lại không?')
-                response = await client.wait_for_message(author=context.message.author)
-                mes = response.content
+            await client.say('Lại không?')
+            response = await client.wait_for_message(author=context.message.author)
+            mes = response.content
     except Exception as e:
         await client.say('chưa chơi được :(')
         print(e)
