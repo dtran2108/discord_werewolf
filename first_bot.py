@@ -101,7 +101,7 @@ async def x(context):
     }
     await client.say('Chị ra gì?')
     response = client.wait_for_message(author=context.message.author)
-    # print(response.clean_content, type(response))
+    print(response.content, type(response))
     print(help(response))
     if response == 'kéo':
         if bot_choice == 'búa':
