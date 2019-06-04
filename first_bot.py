@@ -102,6 +102,7 @@ async def x():
     await client.say('Chị ra gì?')
     response = client.wait_for_message()
     print(response, type(response))
+    print(help(response))
     if response == 'kéo':
         if bot_choice == 'búa':
             await client.say(bot_response['win'])
