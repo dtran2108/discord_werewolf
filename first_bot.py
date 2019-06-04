@@ -11,7 +11,7 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-def play_rock_paper_scissors(mes, bot_choice, bot_response):
+async def play_rock_paper_scissors(mes, bot_choice, bot_response):
     if mes.lower().strip() == 'kéo':
         if bot_choice == 'búa':
             await client.say(bot_response['win'])
