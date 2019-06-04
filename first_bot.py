@@ -127,7 +127,8 @@ async def usd():
         await client.say("Hiện là {} đồng nhoe".format(response['USD_VND']))
 
 
-@client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True)
+@client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True,
+                description='type `!x` to play with me. I\'m so lonely. Crying')
 async def x(context):
     try:
         options = ['kéo', 'búa', 'bao']       
