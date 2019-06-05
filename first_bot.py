@@ -46,7 +46,7 @@ def play_rock_paper_scissors(mes, bot_choice, bot_response):
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=Game(name="póngs | `!help`"))
+    await client.change_presence(game=Game(name="póngs | !help"))
     print("Logged in as " + client.user.name)
 
 
@@ -62,7 +62,7 @@ async def greet():
 @client.command(help='Chửi chết con đĩ mẹ nó.',
                 description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
                 pass_context=True)
-async def chửi(*person):
+async def chửi(person):
     not_allowed = ['Tiến Hưng', 'Saita', 'Công An', 'Dương Trân']
     cursed_sentences = [
         'con đĩ mẹ mày',
@@ -84,18 +84,22 @@ async def chửi(*person):
     counter_dam = [
         'Tao chửi chết mẹ mày h con đĩ thích chửi chị t ko'
     ]
-    if len(person) > 1:
-        person = ' '.join(person)
-    elif len(person) == 1:
-        person = person[0]
-    else:
+    # if len(person) > 1:
+    #     person = ' '.join(person)
+    # elif len(person) == 1:
+    #     person = person[0]
+    # else:
+    if not person:
         await client.say('Chửi ai má?')
-    for per in not_allowed:
-        if per in person:
-            await client.say(random.choice(cursed_sentences) + ' ' + context.message.author.mention)
-            break
-        else:
-            await client.say(random.choice(cursed_sentences) + ' ' + person)
+    else:
+        print('else:', person)
+        for per in not_allowed:
+            if per in person:
+                print(person)
+                await client.say(random.choice(counter_dam) + ' ' + context.message.author.mention)
+                break
+            else:
+                await client.say(random.choice(cursed_sentences) + ' ' + person)
 
 
 @client.command(help='Bot làm bình phương cho nèk.',
@@ -154,7 +158,7 @@ async def x(context):
             else:
                 await play_rock_paper_scissors(mes, bot_choice, bot_response)
             mes = await get_message(context, 'Lại không? ')
-        await client.say('bai :)')
+        await client.say('bai :nq_cri:')
     except Exception as e:
         await client.say('chưa chơi được :(')
         print(e)
