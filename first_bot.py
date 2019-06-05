@@ -46,7 +46,7 @@ def play_rock_paper_scissors(mes, bot_choice, bot_response):
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=Game(name="with póngs"))
+    await client.change_presence(game=Game(name="póngs | `!help`"))
     print("Logged in as " + client.user.name)
 
 
@@ -61,14 +61,9 @@ async def greet():
 
 @client.command(help='Chửi chết con đĩ mẹ nó.',
                 description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
-                )
-async def chửi(*person):
-    if len(person) > 1:
-        person = ' '.join(person)
-    elif len(person) == 1:
-        person = person[0]
-    else:
-        await client.say('Chửi ai má?')
+                pass_context=True)
+async def chửi(*person, context):
+    not_allowed = ['Tiến Hưng', 'Saita', 'Công An', 'Dương Trân']
     cursed_sentences = [
         'con đĩ mẹ mày',
         'nứng lồn quá chơi mình đi má ai rảnh đâu mà chơi',
@@ -84,10 +79,23 @@ async def chửi(*person):
         'con póng khùng, con póng nứng lồn',
         'có xạo lồn quá hong dạ',
         'thằng cha con đĩ mẹ mày',
-        'dô diên mày nứng lồn hả tao xé lồn mày ra',
-        
+        'dô diên mày nứng lồn hả tao xé lồn mày ra',       
     ]
-    await client.say(random.choice(cursed_sentences) + ' ' + person)
+    counter_dam = [
+        'Tao chửi chết mẹ mày h con đĩ thích chửi chị t ko'
+    ]
+    if len(person) > 1:
+        person = ' '.join(person)
+    elif len(person) == 1:
+        person = person[0]
+    else:
+        await client.say('Chửi ai má?')
+    for per in not_allowed:
+        if per in person:
+            await client.say(random.choice(cursed_sentences) + ' ' + context.message.author.mention)
+            break
+        else:
+            await client.say(random.choice(cursed_sentences) + ' ' + person)
 
 
 @client.command(help='Bot làm bình phương cho nèk.',
