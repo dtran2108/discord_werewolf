@@ -62,7 +62,7 @@ async def greet():
 @client.command(help='Chửi chết con đĩ mẹ nó.',
                 description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
                 pass_context=True)
-async def chửi(*person, context):
+async def chửi(*person):
     not_allowed = ['Tiến Hưng', 'Saita', 'Công An', 'Dương Trân']
     cursed_sentences = [
         'con đĩ mẹ mày',
