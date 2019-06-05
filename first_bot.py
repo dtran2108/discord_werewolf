@@ -96,7 +96,7 @@ async def chửi(person):
         for per in not_allowed:
             if per in person:
                 print(person)
-                await client.say(random.choice(counter_dam) + ' ' + context.message.author.mention)
+                await client.say(random.choice(counter_dam) + ' ' + person.message.author.mention)
                 break
             else:
                 await client.say(random.choice(cursed_sentences) + ' ' + person)
