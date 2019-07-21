@@ -1,177 +1,135 @@
+from datetime import datetime
+import discord
+import feedparser
+from log import get_logger
+import time
+import pprint
 import random
-import asyncio
-import aiohttp
-import json
-from discord import Game
-from discord.ext.commands import Bot
 
+pp = pprint.PrettyPrinter(indent=4)
 
-BOT_PREFIX = ("!")
+client = discord.Client()
 TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
-client = Bot(command_prefix=BOT_PREFIX)
+logger, LOG_LEVEL, stream = get_logger()
+logger.setLevel(LOG_LEVEL)
+logger.addHandler(stream)
 
-
-async def get_message(context, question):
-    await client.say(question + context.message.author.mention)
-    response = await client.wait_for_message(author=context.message.author)
-    mes = response.content
-    return mes
-
-
-def play_rock_paper_scissors(mes, bot_choice, bot_response):
-    if mes.lower().strip() == 'kéo':
-        if bot_choice == 'búa':
-            return client.say(bot_response['win'])
-        elif bot_choice == 'bao':
-            return client.say(bot_response['lose'])
-        else:
-            return client.say(bot_response['draw'])
-    elif mes.lower().strip() == 'búa':
-        if bot_choice == 'bao':
-            return client.say(bot_response['win'])
-        elif bot_choice == 'kéo':
-            return client.say(bot_response['lose'])
-        else:
-            return client.say(bot_response['draw'])
-    elif mes.lower().strip() == 'bao':
-        if bot_choice == 'kéo':
-            return client.say(bot_response['win'])
-        elif bot_choice == 'búa':
-            return client.say(bot_response['lose'])
-        else:
-            return client.say(bot_response['draw'])
-    else:
-        return client.say('Nói dì dạ hong hỉu?')
-
+url = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=Game(name="póngs | !help"))
-    print("Logged in as " + client.user.name)
+    logger.info('We have logged in as {}'.format(client.user))
+    games = ["with the leaves", "with fire"]
+    game = discord.Game(name=random.choice(games))
+    await client.change_presence(status=discord.Status.online, activity=game)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    # Show help message
+    if message.content.startswith('$help'):
+        embed=discord.Embed(description="Hi I'm Boo and I was assigned a mission to cheer you up",
+                            colour=0xfef249)
+        embed.set_author(name="Boo - Happy Virus v1.0.0")
+        # commands
+        embed.add_field(name=':hand_splayed: $hello', value="`I'll molasses\ninto your ear`", inline=True)
+        embed.add_field(name=':newspaper: $news', value="`I'll get you\nthe latest news`", inline=True)
+        # footer
+        embed.set_footer(text="You're beautiful no matter what ❤️")
+        logger.info('Sending help message to {}'.format(message.channel))
+        await message.channel.send(embed=embed)
+
+    # Say Hello
+    if message.content.startswith('$hello'):
+        logger.info('Saying hello')
+        current_time = datetime.now()
+        morning = [
+            'Roses are red\nViolets are blue\nSugar is sweet\n'
+            'And so are you\n\nHave a nice day ^^',
+            'Hề lô, gụt mó ninh',
+        ]
+        lunch = [
+            'Trưa rồi đi ăn trưa đi',
+            'Cơm gà ngon đó, đi ăn đi',
+            'Ăn đi rồi rửa mặt cho tỉnh táo quay lại làm việc nèk'
+        ]
+        afternoon = [
+            'Chiều rồi đi học bài đi',
+            'Không đi học thì chơi đàn đi',
+            'Giặt đồ chưa? Đi giặt nhanh',
+            'Tranh thủ ngủ trưa xíu đi, sau này không được ngủ đâu'
+        ]
+        evening = [
+            'Đi ăn chiều đi tối rồi.',
+            'Hôm nay, chị đi học hay ở nhà?\nCó gì thú vị kể em nghe',
+            'Dọn nhà ik, nhà hơi dơ rồi đó'
+        ]
+        late_night = [
+            'Giờ này giờ nào rồi sao chưa đi ngủ ???',
+            '0 giờ rồi em ngủ đi em\nHơi đâu mà lo kế sinh nhaiii',
+            'Mai có đi học không? Sao con mắt còn thao láo z ?',
+            'Mai không đi học thì cũng nên đi ngủ sớm đi chị\nYêu chị gất nhiều ❤️',
+            'Ông trời ơi ngó xuống mà coi h này nó còn thức nè\nNgủ đi má :mad:',
+            'Khuya rồi mà chưa ngủ? Chơi bê đê ko?'
+        ]
+        # 7 <= hour < 10
+        if current_time.hour >= 7 and current_time.hour < 10:
+            logger.info('It\'s morning so I\'m getting morning responses')
+            response = random.choice(morning)
+        # 10 <= hour < 13
+        elif current_time.hour >= 10 and current_time.hour < 13:
+            logger.info('It\'s lunch time !!!')
+            response = random.choice(lunch)
+        # 13 <= hour < 17
+        elif current_time.hour >= 13 and current_time.hour < 17:
+            logger.info('It\'s afternoon, doing something helpful')
+            response = random.choice(afternoon)
+        # 17 <= hour < 22
+        elif current_time.hour >= 17 and current_time.hour < 22:
+            logger.info('It\'s evening, nothing left to say')
+            response = random.choice(evening)
+        # 22 <= hour <= 23 or 0 <= hour < 7 
+        elif ((current_time.hour >= 22 and current_time.hour <= 23)
+                or (current_time.hour >= 0 and current_time.hour < 7)):
+            logger.info('It\'s late_night, going to sleep')
+            response = random.choice(late_night)
+        await message.channel.send(response)
+    
+    # Get all the users of the server
+    if message.content.startswith('$user'):
+        logger.info('Getting users of the server')
+        await message.channel.send(client.users)
+
+    # Send the latest news from vnexpress to channel
+    # báo-mới-mỗi-ngày
+    if message.content.startswith('$news'):
+        # get the latest news on vnexpress
+        feed = feedparser.parse(url)
+        # get channel báo-mới-mỗi-ngày
+        news_channel = client.get_channel(602426911469207552)
+        logger.info('Successfully get information from url')
+
+        for entryNo in range(5):
+            e = discord.Embed()
+            # get the title of the article
+            title = feed.entries[entryNo].title
+            summary = feed.entries[entryNo].summary
+            # get the news image
+            image_link = summary.split('<')[2].split('"')[1]
+            e.set_image(url=image_link)
+            # get the link of the article
+            link = feed.entries[entryNo].links[0].href
+            logger.info('Sending "{}" to {}'.format(title, news_channel))
+            await news_channel.send('**{}**\n<{}>'.format(title, link), embed=e)
 
 
-@client.command(help='Bot gửi lời chào đến cả nhà iu.')
-async def greet():
-    possible_responses = [
-        'Hello xin chào cả nhà iu của kem',
-        'Hello xin chào cả nhà iu đụ đĩ mẹ cả nhà, ố là la',
-    ]
-    await client.say(random.choice(possible_responses))
-
-
-@client.command(help='Chửi chết con đĩ mẹ nó.',
-                description='type !chửi đứa_bị_chửi to get me chửi chết con đĩ mẹ nó',
-                pass_context=True)
-async def chửi(person):
-    not_allowed = ['Tiến Hưng', 'Saita', 'Công An', 'Dương Trân']
-    cursed_sentences = [
-        'con đĩ mẹ mày',
-        'nứng lồn quá chơi mình đi má ai rảnh đâu mà chơi',
-        'dô diên nứng lồn hả đĩ chó',
-        'cái lồn con đĩ mẹ mày',
-        'muốn dzạt cái mỏ lồn mày ghê',
-        'dòng thứ chổi phù thủy tao nhét dô lồn chết con đĩ mẹ mày nghe chưa',
-        'póng mà giả trai đụ nai đụ bò',
-        'tưởng đây ngu chắc hỏng pít tụi pây póng mà gồng',
-        'nói chiện như cái lông lồn dị đó',
-        'nói chiện như lồn trệt dưới mương',
-        'bạn nói như dị là bạn xạo lồn',
-        'con póng khùng, con póng nứng lồn',
-        'có xạo lồn quá hong dạ',
-        'thằng cha con đĩ mẹ mày',
-        'dô diên mày nứng lồn hả tao xé lồn mày ra',       
-    ]
-    counter_dam = [
-        'Tao chửi chết mẹ mày h con đĩ thích chửi chị t ko'
-    ]
-    # if len(person) > 1:
-    #     person = ' '.join(person)
-    # elif len(person) == 1:
-    #     person = person[0]
-    # else:
-    if not person:
-        await client.say('Chửi ai má?')
-    else:
-        print('else:', person)
-        for per in not_allowed:
-            if per in person:
-                print(person)
-                await client.say(random.choice(counter_dam) + ' ' + person.message.author.mention)
-                break
-            else:
-                await client.say(random.choice(cursed_sentences) + ' ' + person)
-
-
-@client.command(help='Bot làm bình phương cho nèk.',
-                description='type !square number to get me square up the number')
-async def square(number):
-    squared_value = float(number) * float(number)
-    await client.say(str(number) + " bình là " + str(squared_value))
-
-
-@client.command(help='Bot làm tính nhân cho nèk.', 
-                description='type !mul num1 num2 num3 to get me multiply all of them')
-async def mul(*args):
-    result = 1
-    for arg in args:
-        result *= float(arg)
-    await client.say('Ra ' + str(result) + ' nè.')
-
-
-@client.command(help='Bot cho coi giá bitcoin nèk.')
-async def bitcoin():
-    url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'
-    async with aiohttp.ClientSession() as session:  # Async HTTP request
-        raw_response = await session.get(url)
-        response = await raw_response.text()
-        response = json.loads(response)
-        await client.say("Giá nè con đĩ: $" + response['bpi']['USD']['rate'])
-
-
-
-@client.command(help='Bot cho coi giá đô la nèk.')
-async def usd():
-    url = 'https://free.currconv.com/api/v7/convert?q=USD_VND&compact=ultra&apiKey=fc5de87be9f62c4191ef'
-    async with aiohttp.ClientSession() as session:
-        raw_response = await session.get(url)
-        response = await raw_response.text()
-        response = json.loads(response)
-        await client.say("Hiện là {} đồng nhoe".format(response['USD_VND']))
-
-
-@client.command(brief='Thách mày xùm xì thắng tao đó con đĩ.', pass_context=True,
-                description='Note: gõ !x 1 lần thôi chơi với tui nè không có chơi với ai hết :)')
-async def x(context):
+def main():
     try:
-        options = ['kéo', 'búa', 'bao']       
-        mes = await get_message(context, 'Chị ra gì? ')
-        while mes != 'không':
-            bot_choice = random.choice(options)
-            bot_response = {
-            'win': bot_choice + '\nò ó o ^^\ncon gà ' + context.message.author.mention,
-            'lose': bot_choice + '\ni chòi cái đồ ăn gian này >.<',
-            'draw': bot_choice + '\nHòa rồi má.'
-            }
-            if mes.lower().strip() not in options:
-                mes = await get_message(context, 'Chị ra gì? ')
-                await play_rock_paper_scissors(mes, bot_choice, bot_response)
-            else:
-                await play_rock_paper_scissors(mes, bot_choice, bot_response)
-            mes = await get_message(context, 'Lại không? ')
-        await client.say('bai :nq_cri:')
+        client.run(TOKEN)
     except Exception as e:
-        await client.say('chưa chơi được :(')
-        print(e)
+        logger.error(e)
 
-
-async def list_servers():
-    await client.wait_until_ready()
-    while not client.is_closed:
-        print("Current servers:")
-        for server in client.servers:
-            print(server.name)
-        await asyncio.sleep(600)
-
-
-client.loop.create_task(list_servers())
-client.run(TOKEN)
+if __name__ == '__main__':
+    main()
