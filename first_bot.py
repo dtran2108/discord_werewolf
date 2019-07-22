@@ -19,7 +19,7 @@ url = 'https://vnexpress.net/rss/tin-moi-nhat.rss'
 @client.event
 async def on_ready():
     logger.info('We have logged in as {}'.format(client.user))
-    games = ["with the leaves", "with fire"]
+    games = ["with the leaves", "with fire", "with you"]
     game = discord.Game(name=random.choice(games))
     await client.change_presence(status=discord.Status.online, activity=game)
 
@@ -30,12 +30,16 @@ async def on_message(message):
 
     # Show help message
     if message.content.startswith('$help'):
-        embed=discord.Embed(description="Hi I'm Boo and I was assigned a mission to cheer you up",
+        emojis = client.emojis
+        kitty = str(emojis[0])
+        competition = str(emojis[1])
+        embed=discord.Embed(title=kitty + " **Boo - The Happy Virus**",
+                            description="Hi I'm Boo and I was assigned a mission to cheer you up",
                             colour=0xfef249)
-        embed.set_author(name="Boo - Happy Virus v1.0.0")
         # commands
         embed.add_field(name=':hand_splayed: $hello', value="`I'll molasses\ninto your ear`", inline=True)
         embed.add_field(name=':newspaper: $news', value="`I'll get you\nthe latest news`", inline=True)
+        embed.add_field(name=competition+' $slap', value="`Have a bad day?\nTell me who you\nwant to slap`", inline=True)
         # footer
         embed.set_footer(text="You're beautiful no matter what ❤️")
         logger.info('Sending help message to {}'.format(message.channel))
@@ -49,6 +53,7 @@ async def on_message(message):
             'Roses are red\nViolets are blue\nSugar is sweet\n'
             'And so are you\n\nHave a nice day ^^',
             'Hề lô, gụt mó ninh',
+            'Cà hê bỏ muối bỏ đường\nBỏ gì cũng được xin em đừng bỏ anh\n:kissing_closed_eyes:',
         ]
         lunch = [
             'Trưa rồi đi ăn trưa đi',
@@ -64,7 +69,8 @@ async def on_message(message):
         evening = [
             'Đi ăn chiều đi tối rồi.',
             'Hôm nay, chị đi học hay ở nhà?\nCó gì thú vị kể em nghe',
-            'Dọn nhà ik, nhà hơi dơ rồi đó'
+            'Dọn nhà ik, nhà hơi dơ rồi đó',
+            'Đi học dzui ko?'
         ]
         late_night = [
             'Giờ này giờ nào rồi sao chưa đi ngủ ???',
@@ -72,7 +78,10 @@ async def on_message(message):
             'Mai có đi học không? Sao con mắt còn thao láo z ?',
             'Mai không đi học thì cũng nên đi ngủ sớm đi chị\nYêu chị gất nhiều ❤️',
             'Ông trời ơi ngó xuống mà coi h này nó còn thức nè\nNgủ đi má :mad:',
-            'Khuya rồi mà chưa ngủ? Chơi bê đê ko?'
+            'Khuya rồi mà chưa ngủ? Chơi bê đê ko?',
+            'Giờ này chưa ngủ hả?\nNghe chuyện ma ko?',
+            'Bây dờ, 1 là đi ngủ, 2 là đưa đít đây ?',
+            'Ngủ đi chị, thức khuya coi chừng bị bê đê đóa',
         ]
         # 7 <= hour < 10
         if current_time.hour >= 7 and current_time.hour < 10:
@@ -112,17 +121,19 @@ async def on_message(message):
         logger.info('Successfully get information from url')
 
         for entryNo in range(5):
-            e = discord.Embed()
+            # e = discord.Embed()
             # get the title of the article
             title = feed.entries[entryNo].title
-            summary = feed.entries[entryNo].summary
+            # summary = feed.entries[entryNo].summary
             # get the news image
-            image_link = summary.split('<')[2].split('"')[1]
-            e.set_image(url=image_link)
+            # image_link = summary.split('<')[2].split('"')[1]
+            # e.set_image(url=image_link)
             # get the link of the article
             link = feed.entries[entryNo].links[0].href
             logger.info('Sending "{}" to {}'.format(title, news_channel))
-            await news_channel.send('**{}**\n<{}>'.format(title, link), embed=e)
+            await news_channel.send('**{}**\n{}'.format(title, link))
+
+    # Slap contest
 
 
 def main():
