@@ -1,5 +1,5 @@
-discord.py==1.2.3
 aiohttp
-websockets
 chardet
+discord.py==1.2.3
 feedparser
+websockets
