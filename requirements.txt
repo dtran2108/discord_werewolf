@@ -1,5 +1,6 @@
 aiohttp
 chardet
+colorlog
 discord.py==1.2.3
 feedparser
 websockets
