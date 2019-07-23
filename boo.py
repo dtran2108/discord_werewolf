@@ -82,26 +82,26 @@ class MyBoo(discord.Client):
 
         # Say Hello
         if message.content.startswith('$hello'):
-            current_time = datetime.now()
+            current_hour = datetime.now().hour + 7
             # 7 <= hour < 10
-            if current_time.hour >= 7 and current_time.hour < 10:
+            if current_hour >= 7 and current_hour < 10:
                 logger.info('It\'s morning so I\'m getting morning responses')
                 response = random.choice(self._blessings["morning"])
             # 10 <= hour < 13
-            elif current_time.hour >= 10 and current_time.hour < 13:
+            elif current_hour >= 10 and current_hour < 13:
                 logger.info('It\'s lunch time !!!')
                 response = random.choice(self._blessings["lunch"])
             # 13 <= hour < 17
-            elif current_time.hour >= 13 and current_time.hour < 17:
+            elif current_hour >= 13 and current_hour < 17:
                 logger.info('It\'s afternoon, doing something helpful')
                 response = random.choice(self._blessings["afternoon"])
             # 17 <= hour < 22
-            elif current_time.hour >= 17 and current_time.hour < 22:
+            elif current_hour >= 17 and current_hour < 22:
                 logger.info('It\'s evening, nothing left to say')
                 response = random.choice(self._blessings["evening"])
             # 22 <= hour <= 23 or 0 <= hour < 7 
-            elif ((current_time.hour >= 22 and current_time.hour <= 23)
-                    or (current_time.hour >= 0 and current_time.hour < 7)):
+            elif ((current_hour >= 22 and current_hour <= 23)
+                    or (current_hour >= 0 and current_hour < 7)):
                 logger.info('It\'s late_night, going to sleep')
                 response = random.choice(self._blessings["late_night"])
             await message.channel.send(response)
