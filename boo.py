@@ -130,7 +130,8 @@ class MyBoo(discord.Client):
                               "But honestly, who the hell would hurt themselves "
                               "like that. Carry on the love for yourself".format(
                                   message.author.mention))
-                    embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
+                    embed.set_thumbnail(url="https://www.flaticon.com/"
+                                            "premium-icon/icons/svg/1910/1910815.svg")
                     logger.info('They didn\'t slap, editting message')
                     await bot_mess.edit(embed=embed)
                 else:
@@ -141,7 +142,8 @@ class MyBoo(discord.Client):
                               "It's okay babe. Come here, I'll give "
                               "you a hug\nThere there".format(
                                   message.author.mention))
-                    embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
+                    embed.set_thumbnail(url="https://www.flaticon.com/"
+                                            "premium-icon/icons/svg/1744/1744732.svg")
                     logger.info('They slapped, editting message')
                     await bot_mess.edit(embed=embed)
 
