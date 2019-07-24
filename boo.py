@@ -103,8 +103,8 @@ class MyBoo(discord.Client):
                 embed=discord.Embed(colour=0xfef249)
                 embed.add_field(name='Slap contest',
                     value="{}, I'm seeing that you want"
-                        " to slap but I don't see anyone "
-                        "you want to slap. In case you want "
+                        " to slap but I don't really see "
+                        "a name. In case you want "
                         "to slap yourself, here's a hand\n"
                         "You have 10 seconds to make a decision".format(
                                             message.author.mention))
@@ -130,6 +130,8 @@ class MyBoo(discord.Client):
                               "But honestly, who the hell would hurt themselves "
                               "like that. Carry on the love for yourself".format(
                                   message.author.mention))
+                    embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
+                    logger.info('They didn\'t slap, editting message')
                     await bot_mess.edit(embed=embed)
                 else:
                     embed=discord.Embed(colour=0xfef249)
@@ -137,8 +139,10 @@ class MyBoo(discord.Client):
                         name='Slap contest',
                         value="{}, Oh, what a slap! Did it hurt? "
                               "It's okay babe. Come here, I'll give "
-                              "you a hug\n\nThere there".format(
+                              "you a hug\nThere there".format(
                                   message.author.mention))
+                    embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
+                    logger.info('They slapped, editting message')
                     await bot_mess.edit(embed=embed)
 
 

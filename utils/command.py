@@ -27,6 +27,8 @@ def generate_help_message(emojis):
 def generate_hello_message(blessings):
     # +7.00 to get Vietnam clock
     current_hour = datetime.now().hour + 7
+    if current_hour >= 24:
+        current_hour -= 24
     # 7 <= hour < 10
     if current_hour >= 7 and current_hour < 10:
         response = random.choice(blessings["morning"])
