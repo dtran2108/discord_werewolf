@@ -103,17 +103,48 @@ class MyBoo(discord.Client):
         # Slap contest
         if message.content.startswith('$slap'):
             mess = message.content.split()
+            # if the user slap themselves
             if len(mess) == 1:
                 embed=discord.Embed(colour=0xfef249)
                 embed.add_field(name='Slap contest',
                     value="{}, I'm seeing that you want"
                         " to slap but I don't see anyone "
                         "you want to slap. In case you want "
-                        "to slap yourself, Here's a hand".format(message.author.mention))
+                        "to slap yourself, here's a hand and "
+                        "you have 10 seconds to make a decision".format(
+                                            message.author.mention))
                 bot_mess = await message.channel.send(embed=embed)
                 await bot_mess.add_reaction(self._emojis["fist"])
-            # await message.channel.send('<@423461043935772682>')
-            pass
+
+                def check(reaction, user):
+                    logger.info("Checking user and emoji: user: {}, emo: {}".format(
+                        user == message.author,
+                        str(reaction.emoji) == self._emojis["fist"],
+                    ))
+                    return user == message.author \
+                         and str(reaction.emoji) == self._emojis["fist"]
+                
+                try:
+                    reaction, user = await self.wait_for('reaction_add',
+                                                timeout=10.0, check=check)
+                except asyncio.TimeoutError:
+                    embed=discord.Embed(colour=0xfef249)
+                    embed.add_field(
+                        name='Slap contest',
+                        value="{}, Time is up. It's hard to hurt yourself right? "
+                              "But honestly, who the hell would hurt themselves "
+                              "like that. Carry on the love for yourself".format(
+                                  message.author.mention))
+                    await bot_mess.edit(embed=embed)
+                else:
+                    embed=discord.Embed(colour=0xfef249)
+                    embed.add_field(
+                        name='Slap contest',
+                        value="{}, Oh, what a slap! Did it hurt? "
+                              "It's okay babe. Come here, I'll give "
+                              "you a hug\n\nThere there".format(
+                                  message.author.mention))
+                    await bot_mess.edit(embed=embed)
 
 
 def main():
