@@ -1,4 +1,6 @@
+from datetime import datetime
 import discord
+import random
 
 
 def generate_help_message(emojis):    
@@ -21,3 +23,24 @@ def generate_help_message(emojis):
     # footer
     embed.set_footer(text="You're beautiful no matter what ❤️")
     return embed
+
+def generate_hello_message(blessings):
+    # +7.00 to get Vietnam clock
+    current_hour = datetime.now().hour + 7
+    # 7 <= hour < 10
+    if current_hour >= 7 and current_hour < 10:
+        response = random.choice(blessings["morning"])
+    # 10 <= hour < 13
+    elif current_hour >= 10 and current_hour < 13:
+        response = random.choice(blessings["lunch"])
+    # 13 <= hour < 17
+    elif current_hour >= 13 and current_hour < 17:
+        response = random.choice(blessings["afternoon"])
+    # 17 <= hour < 22
+    elif current_hour >= 17 and current_hour < 22:
+        response = random.choice(blessings["evening"])
+    # 22 <= hour <= 23 or 0 <= hour < 7 
+    elif ((current_hour >= 22 and current_hour <= 23)
+            or (current_hour >= 0 and current_hour < 7)):
+        response = random.choice(blessings["late_night"])
+    return response, current_hour
