@@ -53,7 +53,7 @@ class MyBoo(discord.Client):
         dump_json_to_file('user', self.users, 'data/users.json')
         logger.info('Successfully dump users to data/users.json')
 
-        games = ["with the leaves", "with fire", "with you"]
+        games = ["with the leaves", "with fire", "with you", "with your heart"]
         game = discord.Game(name=random.choice(games))
         await self.change_presence(status=discord.Status.online, activity=game)
 
@@ -95,11 +95,6 @@ class MyBoo(discord.Client):
                         response, str(message.channel).upper(), current_hour))
             await message.channel.send(response)
         
-        # Get all the users of the server
-        if message.content.startswith('$user'):
-            logger.info('Getting users of the server')
-            await message.channel.send(self._users)
-
         # Slap contest
         if message.content.startswith('$slap'):
             mess = message.content.split()
