@@ -105,8 +105,8 @@ class MyBoo(discord.Client):
                     value="{}, I'm seeing that you want"
                         " to slap but I don't see anyone "
                         "you want to slap. In case you want "
-                        "to slap yourself, here's a hand and "
-                        "you have 10 seconds to make a decision".format(
+                        "to slap yourself, here's a hand\n"
+                        "You have 10 seconds to make a decision".format(
                                             message.author.mention))
                 bot_mess = await message.channel.send(embed=embed)
                 await bot_mess.add_reaction(self._emojis["fist"])
@@ -121,7 +121,7 @@ class MyBoo(discord.Client):
                 
                 try:
                     reaction, user = await self.wait_for('reaction_add',
-                                                timeout=10.0, check=check)
+                                                timeout=20.0, check=check)
                 except asyncio.TimeoutError:
                     embed=discord.Embed(colour=0xfef249)
                     embed.add_field(
