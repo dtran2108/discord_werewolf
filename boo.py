@@ -46,6 +46,7 @@ class MyBoo(discord.Client):
         # create the background tasks and run it in the background
         self.bg_send_news = self.loop.create_task(self.send_news())
         self.bg_load_users = self.loop.create_task(self.load_users())
+        self.bg_update_users = self.loop.create_task(self.update_users())
 
     async def on_ready(self):
         logger.info('We have logged in as {}'.format(self.user))
@@ -59,6 +60,14 @@ class MyBoo(discord.Client):
         games = ["with the leaves", "with fire", "with you", "with your heart"]
         game = discord.Game(name=random.choice(games))
         await self.change_presence(status=discord.Status.online, activity=game)
+    
+    async def update_users(self):
+        await self.wait_until_ready()
+        while not self.is_closed():
+            logger.info('Running update_users in background')
+            dump_json_to_file('user', self.users, 'data/users.json')
+            logger.info('Successfully dump users to data/uses.json in the background')
+            await asyncio.sleep(2) # task run every two seconds
 
     async def load_users(self):
         await self.wait_until_ready()
@@ -68,11 +77,6 @@ class MyBoo(discord.Client):
             logger.info('Successfully loaded users from the background')
             await asyncio.sleep(1) # task run every second
     
-    async def on_member_join(self, member):
-        if member not in self._users:
-            dump_json_to_file('user', self.users, 'data/users.json')
-            logger.info('A new member joined, updating user list')
-
     async def send_news(self):
         await self.wait_until_ready()
         # get channel báo-mới-mỗi-ngày

@@ -19,12 +19,17 @@ def dump_json_to_file(data_type, json_data, destination_file):
         old_users = parse_json_file('data/users.json')
         users_dict = {}
         for user in json_data:
-            if user.id in old_users:
+            if user.id in old_users\
+               and old_users[user.id]["name"] == user.name:
                 continue
-            user_dict = {}
-            user_dict['name'] = user.name
-            user_dict['bot'] = user.bot
-            user_dict['reputation'] = 0
+            elif user.id in old_users:
+                user_dict = {}
+                user_dict['name'] = user.name
+            else:
+                user_dict = {}
+                user_dict['name'] = user.name
+                user_dict['bot'] = user.bot
+                user_dict['reputation'] = 0
             users_dict[user.id] = user_dict
         data = json.dumps(users_dict, indent=4)
     # write data to destination file
