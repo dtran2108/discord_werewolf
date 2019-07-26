@@ -3,6 +3,14 @@ import discord
 import random
 
 
+def embed_message(author, color, name, value, thumbnail=False, url=''):
+    embed=discord.Embed(colour=color)
+    embed.add_field(name=name, value=author+value)
+    if thumbnail:
+        embed.set_thumbnail(url=url)
+    return embed
+
+
 def generate_help_message(emojis):    
     embed=discord.Embed(
         title=emojis["kitty"] + " **Boo - The Happy Virus**",

@@ -6,9 +6,11 @@ import time
 
 # external import
 import feedparser
-from utils.command import generate_help_message, generate_hello_message
 from utils.log import get_logger
 from utils.json_parser import dump_json_to_file, parse_json_file
+from utils.tools import (embed_message,
+                         generate_help_message,
+                         generate_hello_message)
 
 # discord import
 import asyncio
@@ -109,14 +111,12 @@ class MyBoo(discord.Client):
             mess = message.content.split()
             # if the user slap themselves
             if len(mess) == 1:
-                embed=discord.Embed(colour=0xfef249)
-                embed.add_field(name='Slap contest',
-                    value="{}, I'm seeing that you want"
+                embed = embed_message(message.author.mention, 0xfef249,
+                        'Slap contest', ", I'm seeing that you want"
                         " to slap but I don't really see "
                         "a name. In case you want "
                         "to slap yourself, here's a hand\n"
-                        "You have 10 seconds to make a decision".format(
-                                            message.author.mention))
+                        "You have 10 seconds to make a decision")
                 bot_mess = await message.channel.send(embed=embed)
                 await bot_mess.add_reaction(self._emojis["fist"])
 
@@ -132,32 +132,24 @@ class MyBoo(discord.Client):
                     reaction, user = await self.wait_for('reaction_add',
                                                 timeout=15.0, check=check)
                 except asyncio.TimeoutError:
-                    embed=discord.Embed(colour=0xfef249)
-                    embed.add_field(
-                        name='Slap contest',
-                        value="{}, Time is up. It's hard to hurt yourself right? "
-                              "But honestly, who the hell would hurt themselves "
-                              "like that. Carry on the love for yourself".format(
-                                  message.author.mention))
-                    embed.set_thumbnail(url="https://www.flaticon.com/"
-                                            "premium-icon/icons/svg/1910/1910815.svg")
+                    embed = embed_message(message.author.mention, 0xfef249,
+                        'Slap contest', ", Time is up. It's hard to hurt yourself right? "
+                        "But honestly, who the hell would hurt themselves "
+                        "like that. Carry on the love for yourself", thumbnail=True,
+                        url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
                     logger.info('They didn\'t slap, editting message')
                     await bot_mess.edit(embed=embed)
                 else:
-                    embed=discord.Embed(colour=0xfef249)
-                    embed.add_field(
-                        name='Slap contest',
-                        value="{}, Oh, what a slap! Did it hurt? "
-                              "It's okay babe. Come here, I'll give "
-                              "you a hug\nThere there".format(
-                                  message.author.mention))
-                    embed.set_thumbnail(url="https://www.flaticon.com/"
-                                            "premium-icon/icons/svg/1744/1744732.svg")
+                    embed = embed_message(message.author.mention, 0xfef249,
+                        'Slap contest', ", Oh, what a slap! Did it hurt? "
+                        "It's okay babe. Come here, I'll give "
+                        "you a hug\nThere there", thumbnail=True, 
+                        url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
                     logger.info('They slapped, editting message')
                     await bot_mess.edit(embed=embed)
-            # else:
-
-
+            # user found someone to slap
+            else:
+                pass
 
 def main():
     try:
