@@ -69,8 +69,9 @@ class MyBoo(discord.Client):
             await asyncio.sleep(1) # task run every second
     
     async def on_member_join(self, member):
-        dump_json_to_file('user', self.users, 'data/users.json')
-        logger.info('A new member joined, updating user list')
+        if member not in self._users:
+            dump_json_to_file('user', self.users, 'data/users.json')
+            logger.info('A new member joined, updating user list')
 
     async def send_news(self):
         await self.wait_until_ready()
