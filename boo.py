@@ -43,6 +43,7 @@ class MyBoo(discord.Client):
 
         # create the background task and run it in the background
         self.bg_task = self.loop.create_task(self.send_news())
+        self.bg_task1 = self.loop.create_task(self.load_users())
 
     async def on_ready(self):
         logger.info('We have logged in as {}'.format(self.user))
@@ -57,17 +58,25 @@ class MyBoo(discord.Client):
         game = discord.Game(name=random.choice(games))
         await self.change_presence(status=discord.Status.online, activity=game)
 
+    async def load_users(self):
+        await self.wait_until_ready()
+        while not self.is_closed():
+            logger.info('Running load_users in background')
+            self._users = parse_json_file('data/users.json')
+            logger.info('Successfully loaded users from the background')
+            await asyncio.sleep(1) # task run every second
+
     async def send_news(self):
         await self.wait_until_ready()
         # get channel báo-mới-mỗi-ngày
         news_channel = self.get_channel(602426911469207552)
         while not self.is_closed():
-            logger.info('Runnning background task')
+            logger.info('Runnning send news in background')
             now = datetime.now()
             if now.hour == 1: # at 8 AM Vietnam
                 # get the latest news on vnexpress
                 feed = feedparser.parse(news_url)
-                logger.info('Successfully get information from url')
+                logger.info('Successfully get information from url: {}'.format(feed))
                 for entryNo in range(5):
                     # get the title of the article
                     title = feed.entries[entryNo].title
@@ -121,7 +130,7 @@ class MyBoo(discord.Client):
                 
                 try:
                     reaction, user = await self.wait_for('reaction_add',
-                                                timeout=20.0, check=check)
+                                                timeout=15.0, check=check)
                 except asyncio.TimeoutError:
                     embed=discord.Embed(colour=0xfef249)
                     embed.add_field(
@@ -146,6 +155,8 @@ class MyBoo(discord.Client):
                                             "premium-icon/icons/svg/1744/1744732.svg")
                     logger.info('They slapped, editting message')
                     await bot_mess.edit(embed=embed)
+            # else:
+
 
 
 def main():
