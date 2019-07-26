@@ -43,9 +43,9 @@ class MyBoo(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # create the background task and run it in the background
-        self.bg_task = self.loop.create_task(self.send_news())
-        self.bg_task1 = self.loop.create_task(self.load_users())
+        # create the background tasks and run it in the background
+        self.bg_send_news = self.loop.create_task(self.send_news())
+        self.bg_load_users = self.loop.create_task(self.load_users())
 
     async def on_ready(self):
         logger.info('We have logged in as {}'.format(self.user))
@@ -67,6 +67,10 @@ class MyBoo(discord.Client):
             self._users = parse_json_file('data/users.json')
             logger.info('Successfully loaded users from the background')
             await asyncio.sleep(1) # task run every second
+    
+    async def on_member_join(self, member):
+        dump_json_to_file('user', self.users, 'data/users.json')
+        logger.info('A new member joined, updating user list')
 
     async def send_news(self):
         await self.wait_until_ready()
@@ -119,7 +123,7 @@ class MyBoo(discord.Client):
                         "You have 10 seconds to make a decision")
                 bot_mess = await message.channel.send(embed=embed)
                 await bot_mess.add_reaction(self._emojis["fist"])
-
+                # check if the author react with the right emoji
                 def check(reaction, user):
                     logger.info("Checking user and emoji: user: {}, emo: {}".format(
                         user == message.author,
@@ -128,9 +132,10 @@ class MyBoo(discord.Client):
                     return user == message.author \
                          and str(reaction.emoji) == self._emojis["fist"]
                 
-                try:
+                try: # wait for user's reactions and perform the check func above
                     reaction, user = await self.wait_for('reaction_add',
                                                 timeout=15.0, check=check)
+                # if the user didn't slap
                 except asyncio.TimeoutError:
                     embed = embed_message(message.author.mention, 0xfef249,
                         'Slap contest', ", Time is up. It's hard to hurt yourself right? "
@@ -139,7 +144,7 @@ class MyBoo(discord.Client):
                         url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
                     logger.info('They didn\'t slap, editting message')
                     await bot_mess.edit(embed=embed)
-                else:
+                else: # if they slapped
                     embed = embed_message(message.author.mention, 0xfef249,
                         'Slap contest', ", Oh, what a slap! Did it hurt? "
                         "It's okay babe. Come here, I'll give "
@@ -150,6 +155,7 @@ class MyBoo(discord.Client):
             # user found someone to slap
             else:
                 pass
+                
 
 def main():
     try:
