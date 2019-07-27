@@ -19,13 +19,15 @@ def dump_json_to_file(data_type, json_data, destination_file):
         old_users = parse_json_file('data/users.json')
         users_dict = {}
         for user in json_data:
+            # if user already in data and didn't change his name
             if user.id in old_users\
                and old_users[user.id]["name"] == user.name:
                 continue
+            # if the user still in data but change their name
             elif user.id in old_users:
                 user_dict = {}
                 user_dict['name'] = user.name
-            else:
+            else: # if this is a new user
                 user_dict = {}
                 user_dict['name'] = user.name
                 user_dict['bot'] = user.bot

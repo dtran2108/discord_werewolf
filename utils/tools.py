@@ -6,30 +6,44 @@ import random
 def embed_message(author, color, name, value, thumbnail=False, url=''):
     embed=discord.Embed(colour=color)
     embed.add_field(name=name, value=author+value)
-    if thumbnail:
-        embed.set_thumbnail(url=url)
+    if thumbnail: embed.set_thumbnail(url=url)
     return embed
 
 
-def generate_help_message(emojis):    
-    embed=discord.Embed(
-        title=emojis["kitty"] + " **Boo - The Happy Virus**",
-        description="Hi I'm Boo and I was assigned a mission to cheer you up",
-        colour=0xfef249
-    )
-    # commands
-    embed.add_field(
-        name=':hand_splayed: $hello',
-        value="`I'll molasses\ninto your ear`",
-        inline=True
-    )
-    embed.add_field(
-        name=emojis["competition"]+' $slap',
-        value="`Have a bad day?\nTell me who you\nwant to slap`",
-        inline=True
-    )
-    # footer
-    embed.set_footer(text="You're beautiful no matter what ❤️")
+def generate_help_message(message, emojis):
+    if message.endswith('dev'):
+        embed=discord.Embed(
+            title=emojis["kitty"] + " **Boo - The Happy Virus**",
+            description="A help menu for dev only",
+            colour=0xfef249
+        )
+        # commands
+        embed.add_field(
+            name='`$emoup`',
+            value='`Update server\'s emojis`',
+            inline=True
+        )
+        # footer
+        embed.set_footer(text="Dev tool | {}".format(datetime.now()))
+    else:    
+        embed=discord.Embed(
+            title=emojis["kitty"] + " **Boo - The Happy Virus**",
+            description="Hi I'm Boo and I was assigned a mission to cheer you up",
+            colour=0xfef249
+        )
+        # commands
+        embed.add_field(
+            name=':hand_splayed: $hello',
+            value="`I'll molasses\ninto your ear`",
+            inline=True
+        )
+        embed.add_field(
+            name=emojis["competition"]+' $slap',
+            value="`Have a bad day?\nTell me who you\nwant to slap`",
+            inline=True
+        )
+        # footer
+        embed.set_footer(text="You're beautiful no matter what ❤️")
     return embed
 
 def generate_hello_message(blessings):

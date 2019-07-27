@@ -9,14 +9,19 @@
         "bot": true,
         "reputation": 0
     },
-    "423461043935772682": {
-        "name": "C\u00f4ng Annnn",
-        "bot": false,
-        "reputation": 0
-    },
     "270904126974590976": {
         "name": "Dank Memer",
         "bot": true,
+        "reputation": 0
+    },
+    "423461043935772682": {
+        "name": "C\u00f4ng An",
+        "bot": false,
+        "reputation": 0
+    },
+    "461115366693928961": {
+        "name": "tuiduocderadetestbot",
+        "bot": false,
         "reputation": 0
     }
 }
