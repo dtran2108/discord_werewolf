@@ -195,7 +195,7 @@ class MyBoo(discord.Client):
                          and str(reaction.emoji) == self._emojis["absolutely"]
                 try: # wait for user's reactions and perform the check func above
                     reaction, user = await self.wait_for('reaction_add',
-                                                timeout=20.0, check=check) # REMEMBER TO CHANGE THIS TO 10 SECS BEFORE DEPLOYMENT !!!
+                                                timeout=10.0, check=check)
                 except asyncio.TimeoutError: # if the opponent didn't accept
                     embed = embed_message(message.author.mention, 0xfef249,
                         'Slap contest', ", sorry, {} don't have time or something idk\n"
