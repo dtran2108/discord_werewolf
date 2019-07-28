@@ -239,7 +239,7 @@ class MyBoo(discord.Client):
                                                      "You slapped {} out of the server".format(
                                                          message.author.mention, mess[1]
                                                      ))
-                        winner, loser = message.author.id, mess[1][2:-1]
+                        winner, loser = message.author.id, self.get_user(int(mess[1][2:-1]))
                     else:
                         result_embed = discord.Embed(colour=0xfef249)
                         result_embed.add_field(name="Slap contest - Result",
@@ -247,11 +247,22 @@ class MyBoo(discord.Client):
                                                      "You slapped {} out of the server".format(
                                                          mess[1], message.author.mention
                                                      ))
-                        winner, loser = mess[1][2:-1], message.author.id
+                        winner, loser = mess[1][2:-1], message.author
                     result_embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1926/1926050.svg")
                     await message.channel.send(embed=result_embed)
-                    test_server = self.get_guild(593748332203999232)
-                    await test_server.kick(self.get_user(int(loser)))
+                    my_server = self.get_guild(593748332203999232)
+                    await my_server.kick(loser)
+                    try:
+                        loser_dm = await loser.create_dm()
+                        logger.info('Sending DM to the loser')
+                        await loser_dm.send('You have been slapped out of TEST\nWanna rejoin?\nhttps://discord.gg/cCgaTVv')
+                    except discord.Forbidden:
+                        embed=discord.Embed(colour=0xc4160a)
+                        embed.add_field(name="I was rejected", value="Sorry I can't send a DM to {} :(\n"
+                                                       "Can anyone with a kind heart please invite them back?\n"
+                                                       "Thanks\nhttps://discord.gg/cCgaTVv".format(loser.mention))
+                        logger.warning('Cannot send DM to the loser, sending invite link to channel')
+                        await message.channel.send(embed=embed)
                 
 
 def main():
