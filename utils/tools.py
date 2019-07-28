@@ -33,7 +33,7 @@ def generate_help_message(message, emojis):
         )
         # commands
         embed.add_field(
-            name=':hand_splayed: $hello',
+            name=':hand_splayed: $hello | $hi',
             value="`I'll molasses\ninto your ear`",
             inline=True
         )
