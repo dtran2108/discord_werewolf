@@ -239,6 +239,7 @@ class MyBoo(discord.Client):
                                                      "You slapped {} out of the server".format(
                                                          message.author.mention, mess[1]
                                                      ))
+                        winner, loser = message.author.id, mess[1][2:-1]
                     else:
                         result_embed = discord.Embed(colour=0xfef249)
                         result_embed.add_field(name="Slap contest - Result",
@@ -246,8 +247,11 @@ class MyBoo(discord.Client):
                                                      "You slapped {} out of the server".format(
                                                          mess[1], message.author.mention
                                                      ))
+                        winner, loser = mess[1][2:-1], message.author.id
                     result_embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1926/1926050.svg")
                     await message.channel.send(embed=result_embed)
+                    test_server = self.get_guild(593748332203999232)
+                    await test_server.kick(self.get_user(int(loser)))
                 
 
 def main():
