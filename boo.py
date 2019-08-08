@@ -134,135 +134,144 @@ class MyBoo(discord.Client):
         
         # Slap contest
         if message.content.startswith('$slap'):
-            mess = message.content.split()
-            # if the user slap themselves
-            if len(mess) == 1:
-                embed = embed_message(message.author.mention, 0xfef249,
-                        'Slap contest', ", I'm seeing that you want"
-                        " to slap but I don't really see "
-                        "a name. In case you want "
-                        "to slap yourself, here's a hand\n"
-                        "You have 10 seconds to make a decision")
-                bot_mess = await message.channel.send(embed=embed)
-                await bot_mess.add_reaction(self._emojis["fist"])
-                # check if the author react with the right emoji
-                def check(reaction, user):
-                    logger.info("Checking user and emoji "
-                                "if the user slap himself: user: {}, emo: {}".format(
-                        user == message.author,
-                        str(reaction.emoji) == self._emojis["fist"],
-                    ))
-                    return user == message.author \
-                         and str(reaction.emoji) == self._emojis["fist"]
-                
-                try: # wait for user's reactions and perform the check func above
-                    reaction, user = await self.wait_for('reaction_add',
-                                                timeout=15.0, check=check)
-                # if the user didn't slap
-                except asyncio.TimeoutError:
+            if str(message.channel) not in ['dev-env', 'slap-room']:
+                slap_room = self.get_channel(608969666047639563)
+                embed=discord.Embed(colour=0xc4160a)
+                embed.add_field(name="Wrong place to slap !!", value="Sorry {}, please go to {} "
+                                                                     "to start a slap contest".format(
+                                                                      message.author.mention, slap_room))
+                logger.warning('Wrong place to slap, sending warning message !!')
+                await message.channel.send(embed=embed)
+            else:
+                mess = message.content.split()
+                # if the user slap themselves
+                if len(mess) == 1:
                     embed = embed_message(message.author.mention, 0xfef249,
-                        'Slap contest', ", Time is up. It's hard to hurt yourself right? "
-                        "But honestly, who the hell would hurt themselves "
-                        "like that. Carry on the love for yourself", thumbnail=True,
-                        url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
-                    logger.info('They didn\'t slap, editting message')
-                    await bot_mess.edit(embed=embed)
-                else: # if they slapped
-                    embed = embed_message(message.author.mention, 0xfef249,
-                        'Slap contest', ", Oh, what a slap! Did it hurt? "
-                        "It's okay babe. Come here, I'll give "
-                        "you a hug\nThere there", thumbnail=True, 
-                        url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
-                    logger.info('They slapped, editting message')
-                    await bot_mess.edit(embed=embed)
-            else: # user found someone to slap
-                embed = discord.Embed(colour=0xfef249)
-                embed.add_field(name="Slap contest",
-                                value="Beware {}, The great {} challenge"
-                                      " you to a slap contest\nAccept or not?".format(
-                                          mess[1], message.author.mention
-                                      ))
-                slap_mess = await message.channel.send(embed=embed)
-                await slap_mess.add_reaction(self._emojis["absolutely"])
-                # check if the oponent react with the absolutely emojis
-                def check(reaction, user):
-                    logger.info("Checking user and emoji "
-                                "if the opponent say yes: user: {}, emo: {}".format(
-                        user.mention == mess[1],
-                        str(reaction.emoji) == self._emojis["absolutely"],
-                    ))
-                    return user.mention == mess[1] \
-                         and str(reaction.emoji) == self._emojis["absolutely"]
-                try: # wait for user's reactions and perform the check func above
-                    reaction, user = await self.wait_for('reaction_add',
-                                                timeout=10.0, check=check)
-                except asyncio.TimeoutError: # if the opponent didn't accept
-                    embed = embed_message(message.author.mention, 0xfef249,
-                        'Slap contest', ", sorry, {} don't have time or something idk\n"
-                                        "Please try again later.".format(mess[1]),thumbnail=True, 
-                        url="https://www.flaticon.com/premium-icon/icons/svg/1650/1650336.svg")
-                    logger.info("The opponent didn't agree, editting message")
-                    await slap_mess.edit(embed=embed)
-                else: # if the opponent accepted
-                    # challenger's turn
-                    challenger_embed = discord.Embed(colour=0xfef249)
-                    challenger_embed.add_field(name="Slap contest",
-                                    value="It's your turn {}, time to scare your"
-                                          " opponent".format(message.author.mention))
-                    res = await message.channel.send(embed=challenger_embed)
-                    await res.add_reaction(self._emojis["fist"])
-                    challenger_start = datetime.now()
-                    challenger_reaction, user = await self.wait_for('reaction_add',
-                                        check=lambda reaction,
-                                                user: (str(reaction.emoji) == self._emojis["fist"])\
-                                                and (user == message.author))
-                    if challenger_reaction:
-                        challenger_time = datetime.now() - challenger_start
-                    # opponent's turn
-                    opponent_embed = discord.Embed(colour=0xfef249)
-                    opponent_embed.add_field(name="Slap contest",
-                                    value="Now's yours {}, prove yourself!".format(mess[1]))
-                    response = await message.channel.send(embed=opponent_embed)
-                    await response.add_reaction(self._emojis["fist"])
-                    opponent_start = datetime.now()
-                    opponent_reaction, user = await self.wait_for('reaction_add',
-                                        check=lambda reaction,
-                                                user: (str(reaction.emoji) == self._emojis["fist"])\
-                                                and (user.mention == mess[1]))
-                    if opponent_reaction:
-                        opponent_time = datetime.now() - opponent_start
-                    # get result of the contest
-                    if challenger_time < opponent_time:
-                        result_embed = discord.Embed(colour=0xfef249)
-                        result_embed.add_field(name="Slap contest - Result",
-                                               value="Congratulations {}!\n"
-                                                     "You slapped {} out of the server".format(
-                                                         message.author.mention, mess[1]
-                                                     ))
-                        winner, loser = message.author.id, self.get_user(int(mess[1][2:-1]))
-                    else:
-                        result_embed = discord.Embed(colour=0xfef249)
-                        result_embed.add_field(name="Slap contest - Result",
-                                               value="Congratulations {}!\n"
-                                                     "You slapped {} out of the server".format(
-                                                         mess[1], message.author.mention
-                                                     ))
-                        winner, loser = mess[1][2:-1], message.author
-                    result_embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1926/1926050.svg")
-                    await message.channel.send(embed=result_embed)
-                    my_server = self.get_guild(593748332203999232)
-                    await my_server.kick(loser)
-                    try:
-                        loser_dm = await loser.create_dm()
-                        logger.info('Sending DM to the loser')
-                        await loser_dm.send('You have been slapped out of TEST\nWanna rejoin?\nhttps://discord.gg/cCgaTVv')
-                    except discord.Forbidden:
-                        embed=discord.Embed(colour=0xc4160a)
-                        embed.add_field(name="I was rejected", value="Sorry I can't send a DM to {} :(\n"
-                                                       "Can anyone with a kind heart please invite them back?\n"
-                                                       "Thanks\nhttps://discord.gg/cCgaTVv".format(loser.mention))
-                        logger.warning('Cannot send DM to the loser, sending invite link to channel')
-                        await message.channel.send(embed=embed)
+                            'Slap contest', ", I'm seeing that you want"
+                            " to slap but I don't really see "
+                            "a name. In case you want "
+                            "to slap yourself, here's a hand\n"
+                            "You have 10 seconds to make a decision")
+                    bot_mess = await message.channel.send(embed=embed)
+                    await bot_mess.add_reaction(self._emojis["fist"])
+                    # check if the author react with the right emoji
+                    def check(reaction, user):
+                        logger.info("Checking user and emoji "
+                                    "if the user slap himself: user: {}, emo: {}".format(
+                            user == message.author,
+                            str(reaction.emoji) == self._emojis["fist"],
+                        ))
+                        return user == message.author \
+                            and str(reaction.emoji) == self._emojis["fist"]
+                    
+                    try: # wait for user's reactions and perform the check func above
+                        reaction, user = await self.wait_for('reaction_add',
+                                                    timeout=15.0, check=check)
+                    # if the user didn't slap
+                    except asyncio.TimeoutError:
+                        embed = embed_message(message.author.mention, 0xfef249,
+                            'Slap contest', ", Time is up. It's hard to hurt yourself right? "
+                            "But honestly, who the hell would hurt themselves "
+                            "like that. Carry on the love for yourself", thumbnail=True,
+                            url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
+                        logger.info('They didn\'t slap, editting message')
+                        await bot_mess.edit(embed=embed)
+                    else: # if they slapped
+                        embed = embed_message(message.author.mention, 0xfef249,
+                            'Slap contest', ", Oh, what a slap! Did it hurt? "
+                            "It's okay babe. Come here, I'll give "
+                            "you a hug\nThere there", thumbnail=True, 
+                            url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
+                        logger.info('They slapped, editting message')
+                        await bot_mess.edit(embed=embed)
+                else: # user found someone to slap
+                    embed = discord.Embed(colour=0xfef249)
+                    embed.add_field(name="Slap contest",
+                                    value="Beware {}, The great {} challenge"
+                                        " you to a slap contest\nAccept or not?".format(
+                                            mess[1], message.author.mention
+                                        ))
+                    slap_mess = await message.channel.send(embed=embed)
+                    await slap_mess.add_reaction(self._emojis["absolutely"])
+                    # check if the oponent react with the absolutely emojis
+                    def check(reaction, user):
+                        logger.info("Checking user and emoji "
+                                    "if the opponent say yes: user: {}, emo: {}".format(
+                            user.mention == mess[1],
+                            str(reaction.emoji) == self._emojis["absolutely"],
+                        ))
+                        return user.mention == mess[1] \
+                            and str(reaction.emoji) == self._emojis["absolutely"]
+                    try: # wait for user's reactions and perform the check func above
+                        reaction, user = await self.wait_for('reaction_add',
+                                                    timeout=10.0, check=check)
+                    except asyncio.TimeoutError: # if the opponent didn't accept
+                        embed = embed_message(message.author.mention, 0xfef249,
+                            'Slap contest', ", sorry, {} don't have time or something idk\n"
+                                            "Please try again later.".format(mess[1]),thumbnail=True, 
+                            url="https://www.flaticon.com/premium-icon/icons/svg/1650/1650336.svg")
+                        logger.info("The opponent didn't agree, editting message")
+                        await slap_mess.edit(embed=embed)
+                    else: # if the opponent accepted
+                        # challenger's turn
+                        challenger_embed = discord.Embed(colour=0xfef249)
+                        challenger_embed.add_field(name="Slap contest",
+                                        value="It's your turn {}, time to scare your"
+                                            " opponent".format(message.author.mention))
+                        res = await message.channel.send(embed=challenger_embed)
+                        await res.add_reaction(self._emojis["fist"])
+                        challenger_start = datetime.now()
+                        challenger_reaction, user = await self.wait_for('reaction_add',
+                                            check=lambda reaction,
+                                                    user: (str(reaction.emoji) == self._emojis["fist"])\
+                                                    and (user == message.author))
+                        if challenger_reaction:
+                            challenger_time = datetime.now() - challenger_start
+                        # opponent's turn
+                        opponent_embed = discord.Embed(colour=0xfef249)
+                        opponent_embed.add_field(name="Slap contest",
+                                        value="Now's yours {}, prove yourself!".format(mess[1]))
+                        response = await message.channel.send(embed=opponent_embed)
+                        await response.add_reaction(self._emojis["fist"])
+                        opponent_start = datetime.now()
+                        opponent_reaction, user = await self.wait_for('reaction_add',
+                                            check=lambda reaction,
+                                                    user: (str(reaction.emoji) == self._emojis["fist"])\
+                                                    and (user.mention == mess[1]))
+                        if opponent_reaction:
+                            opponent_time = datetime.now() - opponent_start
+                        # get result of the contest
+                        if challenger_time < opponent_time:
+                            result_e608969666047639563mbed = discord.Embed(colour=0xfef249)
+                            result_embed.add_field(name="Slap contest - Result",
+                                                value="Congratulations {}!\n"
+                                                        "You slapped {} out of the server".format(
+                                                            message.author.mention, mess[1]
+                                                        ))
+                            winner, loser = message.author.id, self.get_user(int(mess[1][2:-1]))
+                        else:
+                            result_embed = discord.Embed(colour=0xfef249)
+                            result_embed.add_field(name="Slap contest - Result",
+                                                value="Congratulations {}!\n"
+                                                        "You slapped {} out of the server".format(
+                                                            mess[1], message.author.mention
+                                                        ))
+                            winner, loser = mess[1][2:-1], message.author
+                        result_embed.set_thumbnail(url="https://www.flaticon.com/premium-icon/icons/svg/1926/1926050.svg")
+                        await message.channel.send(embed=result_embed)
+                        my_server = self.get_guild(593748332203999232)
+                        await my_server.kick(loser)
+                        try:
+                            loser_dm = await loser.create_dm()
+                            logger.info('Sending DM to the loser')
+                            await loser_dm.send('You have been slapped out of TEST\nWanna rejoin?\nhttps://discord.gg/cCgaTVv')
+                        except discord.Forbidden:
+                            embed=discord.Embed(colour=0xc4160a)
+                            embed.add_field(name="I was rejected", value="Sorry I can't send a DM to {} :(\n"
+                                                        "Can anyone with a kind heart please invite them back?\n"
+                                                        "Thanks\nhttps://discord.gg/cCgaTVv".format(loser.mention))
+                            logger.warning('Cannot send DM to the loser, sending invite link to channel')
+                            await message.channel.send(embed=embed)
                 
 
 def main():
