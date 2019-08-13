@@ -42,6 +42,11 @@ def generate_help_message(message, emojis):
             value="`Have a bad day?\nTell me who you\nwant to slap`",
             inline=True
         )
+        embed.add_field(
+            name=':pencil: $chinhta | $cta',
+            value="`Check your Vietnamese\nspellings`",
+            inline=True
+        )
         # footer
         embed.set_footer(text="You're beautiful no matter what ❤️")
     return embed

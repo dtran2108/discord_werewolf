@@ -2,6 +2,7 @@
 from datetime import datetime
 import pprint
 import random
+from string import ascii_uppercase
 import time
 
 # external import
@@ -15,7 +16,7 @@ from utils.tools import (embed_message,
 # discord import
 import asyncio
 import discord
-from discord.ext import tasks
+from discord.ext import commands, tasks
 
 # utils
 pp = pprint.PrettyPrinter(indent=4)
@@ -25,7 +26,7 @@ logger.addHandler(stream)
 news_url = 'https://vnexpress.net/rss/thoi-su.rss'
 
 # discord property
-client = discord.Client()
+client = commands.Bot(command_prefix="$")
 TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 
 
@@ -62,6 +63,17 @@ class MyBoo(discord.Client):
                 await asyncio.sleep(2) # task run every two seconds
         except Exception as e:
             logger.error('An error occur while updating users: {}'.format(e))
+    
+    def _generate_spelling_result(self, custom_answers, random_question):
+        i, result = 0, ''
+        for answer in custom_answers:
+            if random_question in answer:
+                result +=  '**`[ {} ]:` {}\n**'.format(ascii_uppercase[i], answer)
+                i += 1
+            else:
+                result +=  '~~`[ {} ]:` {}\n~~'.format(ascii_uppercase[i], answer)
+                i += 1
+        return result
     
     def update_emo(self):
         try:
@@ -114,32 +126,33 @@ class MyBoo(discord.Client):
             return
 
         # update emojis (for dev only)
-        if message.content.startswith('$emoup'):
+        elif message.content.startswith('$emoup'):
             self.update_emo()
             self.load_emo()
             logger.info('Emojis updated')
 
         # Show help message
-        if message.content.startswith('$help'):
+        elif message.content.startswith('$help'):
             embed = generate_help_message(message.content, self._emojis)
             logger.info('Sending help message to {}'.format(message.channel))
             await message.channel.send(embed=embed)
 
         # Say Hello
-        if message.content.startswith('$hello') or message.content.startswith('$hi'):
+        elif message.content.startswith('$hello') or message.content.startswith('$hi'):
             response, current_hour = generate_hello_message(self._blessings)
             logger.info('Sending "{}" to {} at {}'.format(
                         response, str(message.channel).upper(), current_hour))
             await message.channel.send(response)
         
         # Slap contest
-        if message.content.startswith('$slap'):
+        elif message.content.startswith('$slap'):
             if str(message.channel) not in ['dev-env', 'slap-room']:
                 slap_room = self.get_channel(608969666047639563)
                 embed=discord.Embed(colour=0xc4160a)
-                embed.add_field(name="Wrong place to slap !!", value="Sorry {}, please go to {} "
-                                                                     "to start a slap contest".format(
-                                                                      message.author.mention, slap_room))
+                embed.add_field(name="Wrong place to slap !!",
+                                value="Sorry {}, please go to {} "
+                                      "to start a slap contest".format(
+                                        message.author.mention, slap_room))
                 logger.warning('Wrong place to slap, sending warning message !!')
                 await message.channel.send(embed=embed)
             else:
@@ -173,7 +186,8 @@ class MyBoo(discord.Client):
                             'Slap contest', ", Time is up. It's hard to hurt yourself right? "
                             "But honestly, who the hell would hurt themselves "
                             "like that. Carry on the love for yourself", thumbnail=True,
-                            url="https://www.flaticon.com/premium-icon/icons/svg/1910/1910815.svg")
+                            url="https://www.flaticon.com/premium-icon/"
+                                "icons/svg/1910/1910815.svg")
                         logger.info('They didn\'t slap, editting message')
                         await bot_mess.edit(embed=embed)
                     else: # if they slapped
@@ -181,7 +195,8 @@ class MyBoo(discord.Client):
                             'Slap contest', ", Oh, what a slap! Did it hurt? "
                             "It's okay babe. Come here, I'll give "
                             "you a hug\nThere there", thumbnail=True, 
-                            url="https://www.flaticon.com/premium-icon/icons/svg/1744/1744732.svg")
+                            url="https://www.flaticon.com/premium-icon/"
+                                "icons/svg/1744/1744732.svg")
                         logger.info('They slapped, editting message')
                         await bot_mess.edit(embed=embed)
                 else: # user found someone to slap
@@ -194,7 +209,7 @@ class MyBoo(discord.Client):
                     slap_mess = await message.channel.send(embed=embed)
                     await slap_mess.add_reaction(self._emojis["absolutely"])
                     # check if the oponent react with the absolutely emojis
-                    def check(reaction, user):
+                    def _check(reaction, user):
                         logger.info("Checking user and emoji "
                                     "if the opponent say yes: user: {}, emo: {}".format(
                             user.mention == mess[1],
@@ -204,12 +219,14 @@ class MyBoo(discord.Client):
                             and str(reaction.emoji) == self._emojis["absolutely"]
                     try: # wait for user's reactions and perform the check func above
                         reaction, user = await self.wait_for('reaction_add',
-                                                    timeout=10.0, check=check)
+                                                    timeout=10.0, check=_check)
                     except asyncio.TimeoutError: # if the opponent didn't accept
                         embed = embed_message(message.author.mention, 0xfef249,
                             'Slap contest', ", sorry, {} don't have time or something idk\n"
-                                            "Please try again later.".format(mess[1]),thumbnail=True, 
-                            url="https://www.flaticon.com/premium-icon/icons/svg/1650/1650336.svg")
+                                            "Please try again later.".format(mess[1]),
+                                            thumbnail=True, 
+                            url="https://www.flaticon.com/premium-icon/" \
+                                "icons/svg/1650/1650336.svg")
                         logger.info("The opponent didn't agree, editting message")
                         await slap_mess.edit(embed=embed)
                     else: # if the opponent accepted
@@ -261,19 +278,76 @@ class MyBoo(discord.Client):
                         await message.channel.send(embed=result_embed)
                         my_server = self.get_guild(593748332203999232)
                         await my_server.kick(loser)
-                        try:
+                        try: # send DM to loser
                             loser_dm = await loser.create_dm()
                             logger.info('Sending DM to the loser')
-                            await loser_dm.send('You have been slapped out of TEST\nWanna rejoin?\nhttps://discord.gg/cCgaTVv')
-                        except discord.Forbidden:
+                            await loser_dm.send('You have been slapped out of Bita In Wonder Land\n'
+                                                'Wanna rejoin?\nhttps://discord.gg/cCgaTVv')
+                        except discord.Forbidden: # send invite link to channel
                             embed=discord.Embed(colour=0xc4160a)
                             embed.add_field(name="I was rejected", value="Sorry I can't send a DM to {} :(\n"
                                                         "Can anyone with a kind heart please invite them back?\n"
                                                         "Thanks\nhttps://discord.gg/cCgaTVv".format(loser.mention))
                             logger.warning('Cannot send DM to the loser, sending invite link to channel')
                             await message.channel.send(embed=embed)
-                
+        # Vietnamese spellings
+        elif message.content.startswith('$cta') or message.content.startswith('$chinhta'):
+            letter_to_unicode = ['🇦', '🇧', '🇨', '🇩']
+            choices = {}
+            choices_string = ''
+            questions = parse_json_file('data/spellings.json')
+            # the question is also the answer
+            random_question = list(questions.keys())[random.randint(0, len(questions)-1)]
+            custom_answers = questions[random_question]
+            logger.info('Successfully parse questions')
+            logger.info('Random question is: {}'.format(random_question))
+            random.shuffle(custom_answers)
+            i = 0
+            for answer in custom_answers:
+                choices_string +=  '`[ {} ]:` {}\n'.format(ascii_uppercase[i], answer)
+                choices[letter_to_unicode[i]] = answer
+                i += 1
+            for choice in choices.keys():
+                if choices[choice] == random_question:
+                    right_answer = choice
+                    break
+            embed=discord.Embed(colour=0xeddb39)
+            embed.add_field(name="Vietnamese spelling quick question in 10s\n"
+                                    "Which one is correct?",
+                            value=choices_string)
+            mess = await message.channel.send(embed=embed)
+            for letter in letter_to_unicode:
+                await mess.add_reaction(letter)
+            def __check(reaction, user):
+                return user == message.author
+            try:
+                reaction, user = await self.wait_for('reaction_add',
+                                            timeout=10.0, check=__check)
+            except asyncio.TimeoutError: # if the user didn't react anything
+                result = self._generate_spelling_result(custom_answers, random_question)
+                embed=discord.Embed(colour=0xfa031c)
+                embed.add_field(name="Vietnamese spelling quick question in 10s\n"
+                                     "Which one is correct?",
+                                value=result+'\nTime out!, the answer is {}'.format(right_answer))
+                await mess.edit(embed=embed)
+            else: # if the user reacted something, if the answer is wrong we have to wait for 10 secs
+                if reaction.emoji != right_answer: # if it is a wrong answer
+                    result = self._generate_spelling_result(custom_answers, random_question)
+                    embed=discord.Embed(colour=0xfa031c)
+                    embed.add_field(name="Vietnamese spelling quick question in 10s\n"
+                                            "Which one is correct?",
+                                    value=result+'\nNope, it\'s {}'.format(right_answer))
+                    await mess.edit(embed=embed)
+                else: # if it is right
+                    result = self._generate_spelling_result(custom_answers, random_question)
+                    embed=discord.Embed(colour=0x09e30d)
+                    embed.add_field(name="Vietnamese spelling quick question in 10s\n"
+                                            "Which one is correct?",
+                                    value=result+'\nYou are absolutely right!')
+                    await mess.edit(embed=embed)
+            
 
+                    
 def main():
     try:
         client = MyBoo()
