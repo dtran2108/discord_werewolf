@@ -10,5 +10,182 @@
         "Sổ mũi",
         "Xỗ mủi",
         "Sổ mủi"
-    ]    
+    ],
+    "Thúc giục": [
+        "Thúc giục",
+        "Thúc dục",
+        "Thút giục",
+        "Thút dụt"
+    ],
+    "Vương miện": [
+        "Vương miệng",
+        "Vươn miện",
+        "Vươn miệng",
+        "Vương miện"
+    ],
+    "Vàng ròng": [
+        "Vàng ròng",
+        "Vàng dòng",
+        "Vàn dòng",
+        "Vàn ròng"
+    ],
+    "Sốt sắng": [
+        "Sốt sắng",
+        "Xốt xắng",
+        "Sốt xắn", 
+        "Xốt sắn"
+    ],
+    "Sửa chữa": [
+        "Sửa chữa",
+        "Sữa chữa",
+        "Xữa chửa",
+        "Sửa chửa"
+    ],
+    "Xán lạn": [
+        "Xán lạn",
+        "Sáng lạn",
+        "Sáng lạng",
+        "Xáng lạng"
+    ],
+    "cọ xát": [
+        "cọ xát",
+        "cọ sát"
+    ],
+    "giành giật": [
+        "giành giật",
+        "dành giật",
+        "dành dật",
+        "giành dật"
+    ],
+    "Bổ sung": [
+        "Bổ sung",
+        "Bổ xung",
+        "Bỗ sung"
+    ],
+    "trau dồi": [
+        "trau dồi",
+        "trao dồi"
+    ],
+    "rong ruổi": [
+        "rong ruổi",
+        "rong ruỗi"
+    ],
+    "vững chãi": [
+        "vững chãi",
+        "vững trải",
+        "dững chãi"
+    ],
+    "Gỡ gạc": [
+        "Gỡ gạc",
+        "Gỡ gạt"
+    ],
+    "Chẩn đoán": [
+        "Chuẩn đoán",
+        "Chẩn đoán"
+    ],
+    "Tham quan": [
+        "Tham quan",
+        "Thăm quan"
+    ],
+    "Kết cục": [
+        "Kết cục",
+        "Kết cuộc"
+    ],
+    "Nghe phong thanh": [
+        "Nghe phong thanh",
+        "Nghe phong phanh"
+    ],
+    "Bắt chước": [
+        "Bắt chước",
+        "Bắt chiếc"
+    ],
+    "huyên thiên": [
+        "huyên thiên",
+        "luyên thuyên"
+    ],
+    "Khoảng không": [
+        "Khoảng không",
+        "Khoản không"
+    ],
+    "Số chẵn": [
+        "Số chẵn",
+        "Số chẳn"
+    ],
+    "Số lẻ": [
+        "Số lẻ",
+        "Số lẽ"
+    ],
+    "Hoa ban trắng": [
+        "Hoa ban trắng",
+        "Hoa bang trắng"
+    ],
+    "Nhạt nhẽo": [
+        "Nhạt nhẽo",
+        "Nhạt nhẻo"
+    ],
+    "Hội chứng": [
+        "Hội chứng",
+        "Hội trứng"
+    ],
+    "Chau mày": [
+        "Trau mày",
+        "Chau mày",
+        "Chao mày"
+    ],
+    "Lắp ráp": [
+        "Lắp ráp",
+        "Lắp dáp"
+    ],
+    "Chim chích": [
+        "Chim chích",
+        "Chim trích"
+    ],
+    "miễn cưỡng": [
+        "miễn cưỡng",
+        "miễn cưởng"
+    ],
+    "Dương Trân": [
+        "Dương Chân",
+        "Dương Trân"
+    ],
+    "Ăn bữa giỗ, lỗ bữa cày": [
+        "Ăn bữa giỗ, lỗ bữa cày",
+        "Ăn bữa giỗ, lổ bữa cày"
+    ],
+    "Ăn cá nhả xương, ăn đường nuốt chậm": [
+        "Ăn cá nhả xương, ăn đường nuốt chậm",
+        "Ăn cá nhã xương, ăn đường nuốt chậm"
+    ],
+    "Ăn dầm, nằm dề": [
+        "Ăn dầm, nằm dề",
+        "Ăn dầm, nằm về"
+    ],
+    "Ăn cơm có canh như tu hành có bạn": [
+        "Ăn cơm có canh như tu hành có bạn",
+        "Ăn cơm có rau như tu hành có bạn"
+    ],
+    "Ăn cơm không rau như nhà giàu chết không nhạc": [
+        "Ăn cơm không rau như nhà giàu chết không nhạc",
+        "Ăn cơm không canh như nhà giàu chết không nhạc"
+    ],
+    "Ăn cây nào, rào cây nấy": [
+        "Ăn cây nào, rào cây nấy",
+        "Ăn cây nào, gào cây nấy"
+    ],
+    "Ăn một bát cháo, chạy ba quảng đồng": [
+        "Ăn một bát cháo, chạy ba quảng đồng",
+        "Ăn một bát cháo, chạy ba quản đồng"
+    ],
+    "Bao giờ cho khỉ đeo hoa\nCho voi đánh sáp, cho gà nhuộm răng": [
+        "Bao giờ cho khỉ đeo hoa\nCho voi đánh sáp, cho gà nhuộm răng",
+        "Bao giờ cho khỉ đeo hoa\nCho voi đánh xáp, cho gà nhuộm răng"
+    ],
+    "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen sì": [
+        "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen sì",
+        "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen xì"
+    ],
+    "Mấy đời bánh đúc có xương\nMấy đời dì ghẻ mà thương con chồng": [
+        "Mấy đời bánh đúc có xương\nMấy đời dì ghẻ mà thương con chồng",
+        "Mấy đời bánh đúc có xương\nMấy đời dì ghẽ mà thương con chồng"
+    ]
 }
