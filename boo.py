@@ -2,7 +2,7 @@
 from datetime import datetime
 import  json
 import pprint
-import random, requests
+import random
 from string import ascii_uppercase
 import time
 
