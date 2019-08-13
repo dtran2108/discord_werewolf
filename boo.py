@@ -1,7 +1,8 @@
 # python lib
 from datetime import datetime
+import  json
 import pprint
-import random
+import random, requests
 from string import ascii_uppercase
 import time
 
@@ -29,6 +30,9 @@ news_url = 'https://vnexpress.net/rss/thoi-su.rss'
 client = commands.Bot(command_prefix="$")
 TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 
+# oxford property
+app_id = "ecd361d3"
+app_key = "137bb0ba963159473f0bfe98740ce1fb"
 
 class MyBoo(discord.Client):
     # load blessings
@@ -67,7 +71,7 @@ class MyBoo(discord.Client):
     def _generate_spelling_result(self, custom_answers, random_question):
         i, result = 0, ''
         for answer in custom_answers:
-            if random_question in answer:
+            if answer == random_question:
                 result +=  '**`[ {} ]:` {}\n**'.format(ascii_uppercase[i], answer)
                 i += 1
             else:
@@ -314,10 +318,12 @@ class MyBoo(discord.Client):
             embed=discord.Embed(colour=0xeddb39)
             embed.add_field(name="Vietnamese spelling quick question in 10s\n"
                                     "Which one is correct?",
-                            value=choices_string)
+                            value=choices_string+'\n{}, please react a letter.'.format(
+                                message.author.mention
+                            ))
             mess = await message.channel.send(embed=embed)
-            for letter in letter_to_unicode:
-                await mess.add_reaction(letter)
+            for i in range(len(custom_answers)):
+                await mess.add_reaction(letter_to_unicode[i])
             def __check(reaction, user):
                 return user == message.author
             try:
@@ -328,7 +334,10 @@ class MyBoo(discord.Client):
                 embed=discord.Embed(colour=0xfa031c)
                 embed.add_field(name="Vietnamese spelling quick question in 10s\n"
                                      "Which one is correct?",
-                                value=result+'\nTime out!, the answer is {}'.format(right_answer))
+                                value=result+'\n{}, time out!, '
+                                             'the answer is {}'.format(
+                                                 message.author.mention,
+                                                 right_answer))
                 await mess.edit(embed=embed)
             else: # if the user reacted something, if the answer is wrong we have to wait for 10 secs
                 if reaction.emoji != right_answer: # if it is a wrong answer
@@ -336,14 +345,17 @@ class MyBoo(discord.Client):
                     embed=discord.Embed(colour=0xfa031c)
                     embed.add_field(name="Vietnamese spelling quick question in 10s\n"
                                             "Which one is correct?",
-                                    value=result+'\nNope, it\'s {}'.format(right_answer))
+                                    value=result+'\n{}, nope, it\'s {}'.format(
+                                        message.author.mention, right_answer))
                     await mess.edit(embed=embed)
                 else: # if it is right
                     result = self._generate_spelling_result(custom_answers, random_question)
                     embed=discord.Embed(colour=0x09e30d)
                     embed.add_field(name="Vietnamese spelling quick question in 10s\n"
                                             "Which one is correct?",
-                                    value=result+'\nYou are absolutely right!')
+                                    value=result+'\n{}, you are absolutely right!'.format(
+                                        message.author.mention
+                                    ))
                     await mess.edit(embed=embed)
             
 
