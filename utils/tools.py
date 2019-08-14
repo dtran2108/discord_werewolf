@@ -1,6 +1,7 @@
 from datetime import datetime
 import discord
 import random
+from string import ascii_uppercase
 
 
 def embed_message(author, color, name, value, thumbnail=False, url=''):
@@ -8,6 +9,18 @@ def embed_message(author, color, name, value, thumbnail=False, url=''):
     embed.add_field(name=name, value=author+value)
     if thumbnail: embed.set_thumbnail(url=url)
     return embed
+
+
+def generate_spelling_result(custom_answers, random_question):
+    i, result = 0, ''
+    for answer in custom_answers:
+        if answer == random_question:
+            result +=  '**`[ {} ]:` {}\n**'.format(ascii_uppercase[i], answer)
+            i += 1
+        else:
+            result +=  '~~`[ {} ]:` {}\n~~'.format(ascii_uppercase[i], answer)
+            i += 1
+    return result
 
 
 def generate_help_message(message, emojis):
@@ -20,15 +33,32 @@ def generate_help_message(message, emojis):
         # commands
         embed.add_field(
             name='`$emoup`',
-            value='`Update server\'s emojis`',
+            value='`Update server\'s\nemojis`',
             inline=True
+        )
+        embed.add_field(
+            name="`$load_bless`",
+            value="`Load blessings\nin case blessings\nwere updated\nbut never"
+                  " loaded`",
+            inline=True           
+        )
+        embed.add_field(
+            name='`$add_bless`',
+            value="`Add new bless\n[time] [new_bless]`",
+            inline=True
+        )
+        embed.add_field(
+            name='`$show_bless`',
+            value="`Show bless on time\n[time]: morning, lunch\nafternoon, "
+                  "evening, late_night`"
         )
         # footer
         embed.set_footer(text="Dev tool | {}".format(datetime.now()))
     else:    
         embed=discord.Embed(
             title=emojis["kitty"] + " **Boo - The Happy Virus**",
-            description="Hi I'm Boo and I was assigned a mission to cheer you up",
+            description="Hi I'm Boo and I was assigned a " \
+                        "mission to cheer you up",
             colour=0xfef249
         )
         # commands

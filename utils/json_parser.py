@@ -8,6 +8,9 @@ def parse_json_file(filepath):
 
 
 def dump_json_to_file(data_type, json_data, destination_file):
+    # get blessings
+    if data_type == 'bless':
+        data = json.dumps(json_data, indent=4)
     # get emoji
     if data_type == 'emoji':
         emoji_dict = {}
