@@ -1,4 +1,14 @@
 {
+    "malicious": {
+        "answers": [
+            "malicous",
+            "malecious",
+            "malicious"
+        ],
+        "pronounce": "/məˈlɪʃ.əs/",
+        "meaning": "  ‣  _adjective_ : intended to harm or upset other people",
+        "example": "He complained that he'd been receiving **malicious** phone calls."
+    },
     "despicable": {
         "answers": [
             "despicable",
@@ -8,7 +18,7 @@
         ],
         "pronounce": "/dɪˈspɪk.ə.bəl/",
         "meaning": "  ‣  _adjective_ : very unpleasant or bad, causing strong feelings of dislike",
-        "example": "He's a despicable human being!"
+        "example": "He's a **despicable** human being!"
     },
     "abominable": {
         "answers": [

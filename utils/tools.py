@@ -93,7 +93,7 @@ def generate_help_message(message, emojis):
         )
         embed.add_field(
             name='`$add_bless`',
-            value="`Add new bless\n[time] [new_bless]`",
+            value="`Add new bless\n',,': '\\n'\n[time] [new_bless]`",
             inline=True
         )
         embed.add_field(
