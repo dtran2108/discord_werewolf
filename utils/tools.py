@@ -72,8 +72,9 @@ def generate_spelling_result(lang, custom_answers, random_question, author,
     return embed
 
 
-def generate_help_message(message, emojis):
-    if message.endswith('dev'):
+def generate_help_message(author, message, emojis):
+    if message.endswith('dev') and 602501937685987378 \
+        in [role.id for role in author.roles]:
         embed=discord.Embed(
             title=emojis["kitty"] + " **Boo - The Happy Virus**",
             description="A help menu for dev only",
@@ -98,8 +99,14 @@ def generate_help_message(message, emojis):
         )
         embed.add_field(
             name='`$show_bless`',
-            value="`Show bless on time\n[time]: morning, lunch\nafternoon, "
+            value="`Show bless on time\n[time]: morning, lunch, afternoon, "
                   "evening, late_night`"
+        )
+        embed.add_field(
+            name='`$add_spell`',
+            value="`Add new spelling\n\"[lang]\" \"[question]\" "
+                  "\"[answer1,answer2...]\" \"[meaning]\" \"[example]\" "
+                  "\"<pronounce>\"`"
         )
         # footer
         embed.set_footer(text="Dev tool | {}".format(datetime.now()))

@@ -8,8 +8,8 @@ def parse_json_file(filepath):
 
 
 def dump_json_to_file(data_type, json_data, destination_file):
-    # get blessings
-    if data_type == 'bless':
+    # get blessings or spelling
+    if data_type == 'bless' or data_type == 'spell':
         data = json.dumps(json_data, indent=4)
     # get emoji
     if data_type == 'emoji':
@@ -19,7 +19,7 @@ def dump_json_to_file(data_type, json_data, destination_file):
         data = json.dumps(emoji_dict, indent=4)
     # get user
     if data_type == 'user':
-        old_users = parse_json_file('data/users.json')
+        old_users = parse_json_file('data/server_data/users.json')
         users_dict = {}
         for user in json_data:
             # if user already in data and didn't change his name

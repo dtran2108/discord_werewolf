@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 import pprint
 import random
+import re
 from string import ascii_uppercase
 import time
 
@@ -33,14 +34,18 @@ TOKEN = 'NTg0MjkyMzU1MTM4NTE5MDUz.XPLH2Q.YD_OAt0xO_vzoZhdjxq875rKtgU'
 
 
 class MyBoo(discord.Client):
+    # load spellings
+    _vn_spellings = parse_json_file('data/spelling/vn_spellings.json')
+    _en_spellings = parse_json_file('data/spelling/en_spellings.json')
+    logger.info('Spellings successfully loaded')
     # load blessings
     _blessings = parse_json_file('data/blessings.json')
     logger.info('Blessings successfully loaded')
     # load server's emojis
-    _emojis = parse_json_file("data/emojis.json")
+    _emojis = parse_json_file("data/server_data/emojis.json")
     logger.info('Server\'s emojis successfully loaded')
     # load server's users
-    _users = parse_json_file("data/users.json")
+    _users = parse_json_file("data/server_data/users.json")
     logger.info('Server\'s users successfully loaded')
 
     def __init__(self, *args, **kwargs):
@@ -68,16 +73,16 @@ class MyBoo(discord.Client):
     
     def update_emo(self):
         try:
-            dump_json_to_file('emoji', self.emojis, 'data/emojis.json')
+            dump_json_to_file('emoji', self.emojis, 'data/server_data/emojis.json')
         except Exception as e:
             logger.error('An error occur while updating emojis: {}'.format(e))
         else:
-            logger.info('Successfully dump users to data/emojis.json '
+            logger.info('Successfully dump users to data/server_data/emojis.json '
                         'in the background')
 
     def load_emo(self):
         try:
-            self._emojis = parse_json_file('data/emojis.json')
+            self._emojis = parse_json_file('data/server_data/emojis.json')
         except Exception as e:
             logger.error('An error occur while loading emojis: {}'.format(e))
         else:
@@ -87,7 +92,7 @@ class MyBoo(discord.Client):
         await self.wait_until_ready()
         try:
             while not self.is_closed():
-                self._users = parse_json_file('data/users.json')
+                self._users = parse_json_file('data/server_data/users.json')
                 await asyncio.sleep(1) # task run every second
         except Exception as e:
             logger.error('An error occur while updating users: {}'.format(e))
@@ -115,22 +120,32 @@ class MyBoo(discord.Client):
             await asyncio.sleep(3600) # task run every hour
 
     async def on_message(self, message):
+        is_staff = 602501937685987378 in [role.id for role in message.author.roles]
         if message.author == client.user:
             return
 
+        # send release notes to announce channel (for dev only)
+        elif message.content.startswith('$release') and is_staff:
+            logger.info('Getting release notes') 
+            with open('data/release_notes', 'r') as f:
+                release_notes = f.read()
+            announce = self.get_channel(593751362907537418)
+            logger.info('Sending release notes') 
+            await announce.send(release_notes)
+
         # update emojis (for dev only)
-        elif message.content.startswith('$emoup'):
+        elif message.content.startswith('$emoup') and is_staff:
             self.update_emo()
             self.load_emo()
             logger.info('Emojis updated')
         
         # load blessings (for dev only)
-        elif message.content.startswith('$load_bless'):
+        elif message.content.startswith('$load_bless') and is_staff:
             self._blessings = parse_json_file('data/blessings.json')
             await message.channel.send('All blessings loaded')
         
         # update new blessings (for dev only)
-        elif message.content.startswith('$add_bless'):
+        elif message.content.startswith('$add_bless') and is_staff:
             mess_content = message.content.split()
             bless_content = ' '.join(mess_content[2:]).replace(',,','\n')
             time_period, content = mess_content[1], bless_content
@@ -139,8 +154,30 @@ class MyBoo(discord.Client):
             await message.channel.send('Blessing successfully updated\n'
                                        'Remember to reload blessings')
         
+        # update new spellings (for dev only)
+        elif message.content.startswith('$add_spell') and is_staff:
+            new_spelling = {}
+            pattern = re.compile(r'(")')
+            group = re.split(pattern, message.content)
+            group = list(filter(lambda a: a != '"' and a != ' ', group))
+            lang, mess_content = group[1], group[2:-1]
+            spelling_key = mess_content[0]
+            new_spelling["answers"] = mess_content[1].split(',')
+            new_spelling["meaning"] = mess_content[2].replace(',,', '\n')
+            new_spelling["example"] = mess_content[3].replace(',,', '\n')
+            if lang == 'vn':
+                dump_file = 'data/spelling/vn_spellings.json'
+                self._vn_spellings[spelling_key] = new_spelling
+                dump_json_to_file('spell', self._vn_spellings, dump_file)
+            elif lang == 'en':
+                dump_file = 'data/spelling/en_spellings.json'
+                new_spelling["pronounce"] = mess_content[4]
+                self._en_spellings[spelling_key] = new_spelling
+                dump_json_to_file('spell', self._en_spellings, dump_file)
+            await message.channel.send('Spelling successfully updated')
+        
         # show blessings for time period (for dev only)
-        elif message.content.startswith('$show_bless'):
+        elif message.content.startswith('$show_bless') and is_staff:
             _, time_period = message.content.split()
             for blessing in self._blessings[time_period][-5:]:
                 await message.channel.send('```\n{}\n```\n'.format(
@@ -150,7 +187,7 @@ class MyBoo(discord.Client):
 
         # Show help message
         elif message.content.startswith('$help'):
-            embed = generate_help_message(message.content, self._emojis)
+            embed = generate_help_message(message.author, message.content, self._emojis)
             logger.info('Sending help message to {}'.format(message.channel))
             await message.channel.send(embed=embed)
 
@@ -165,11 +202,11 @@ class MyBoo(discord.Client):
         # Slap contest
         elif message.content.startswith('$slap'):
             if str(message.channel) not in ['dev-env', 'slap-room']:
-                slap_room = self.get_channel(608969666047639563)
+                slap_room = '<#608969666047639563>'
                 embed=discord.Embed(colour=0xc4160a)
                 embed.add_field(name="Wrong place to slap !!",
                                 value="Sorry {}, please go to {} "
-                                      "to start a slap contest".format(
+                                      "to start slapping".format(
                                         message.author.mention, slap_room))
                 logger.warning('Wrong place to slap, '
                                'sending warning message !!')
@@ -363,10 +400,10 @@ class MyBoo(discord.Client):
             choices = {}
             choices_string = ''
             if lang == 'vn':
-                questions = parse_json_file('data/vn_spellings.json')
+                questions = self._vn_spellings
                 pronounce = None
             elif lang == 'en':
-                questions = parse_json_file('data/en_spellings.json')
+                questions = self._en_spellings
             # the question is also the answer
             random_question = list(questions.keys())[random.randint(
                 0, len(questions)-1)]
