@@ -132,7 +132,8 @@ class MyBoo(discord.Client):
         # update new blessings (for dev only)
         elif message.content.startswith('$add_bless'):
             mess_content = message.content.split()
-            time_period, content = mess_content[1], ' '.join(mess_content[2:])
+            bless_content = ' '.join(mess_content[2:]).replace(',,','\n')
+            time_period, content = mess_content[1], bless_content
             self._blessings[time_period].append(content)
             dump_json_to_file('bless', self._blessings, 'data/blessings.json')
             await message.channel.send('Blessing successfully updated\n'
@@ -346,17 +347,35 @@ class MyBoo(discord.Client):
                                 'link to channel')
                             await message.channel.send(embed=embed)
         # Vietnamese spellings
-        elif message.content.startswith('$cta') \
-                or message.content.startswith('$chinhta'):
+        elif message.content.startswith('$spell') \
+                or message.content.startswith('$spelling'):
+            if len(message.content.split()) > 1:
+                _, lang = message.content.split()
+            else:
+                logger.warning('Invalid syntax, sending choices')
+                embed=discord.Embed(colour=0xfa031c)
+                embed.add_field(
+                    name='Are you missing something?',
+                    value='Please choose between `en` and `vn`.'
+                )
+                await message.channel.send(embed=embed)
             unicode_letters = ['🇦', '🇧', '🇨', '🇩']
             choices = {}
             choices_string = ''
-            questions = parse_json_file('data/spellings.json')
+            if lang == 'vn':
+                questions = parse_json_file('data/vn_spellings.json')
+                pronounce = None
+            elif lang == 'en':
+                questions = parse_json_file('data/en_spellings.json')
             # the question is also the answer
             random_question = list(questions.keys())[random.randint(
                 0, len(questions)-1)]
+            question_env = questions[random_question]
+            if "pronounce" in question_env:
+                pronounce = question_env["pronounce"]
+            meaning, example = question_env["meaning"], question_env["example"]
             # get the answers of the question
-            custom_answers = questions[random_question]
+            custom_answers = question_env["answers"]
             logger.info('Successfully parse questions')
             logger.info('Random question is: {}'.format(random_question))
             random.shuffle(custom_answers)
@@ -371,14 +390,19 @@ class MyBoo(discord.Client):
                 if choices[choice] == random_question:
                     right_answer = choice
                     break
+
+            # initial question
+            heading = "Vietnamese" if lang == 'vn' else "English"
+            heading += " spelling quick question in 10s\nWhich one is correct?"
+            val = '**Pronounce**: {}\n{}'.format(pronounce, choices_string) if \
+                    pronounce else choices_string
             embed=discord.Embed(colour=0xeddb39)
-            embed.add_field(name="Vietnamese spelling quick question in 10s\n"
-                                    "Which one is correct?",
-                            value=choices_string+'\n{}, please react'
-                                                 ' a letter.'.format(
+            embed.add_field(name=heading,
+                            value=val+'\n{}, please react a letter.'.format(
                                 message.author.mention
                             ))
             mess = await message.channel.send(embed=embed)
+
             for i in range(len(custom_answers)):
                 await mess.add_reaction(unicode_letters[i])
             def __check(reaction, user):
@@ -387,41 +411,22 @@ class MyBoo(discord.Client):
                 reaction, user = await self.wait_for('reaction_add',
                                             timeout=10.0, check=__check)
             except asyncio.TimeoutError: # if the user didn't react anything
-                result = generate_spelling_result(
-                    custom_answers, random_question)
-                embed=discord.Embed(colour=0xfa031c)
-                embed.add_field(name="Vietnamese spelling quick "
-                                     "question in 10s\n"
-                                     "Which one is correct?",
-                                value=result+'\n{}, time out!, '
-                                             'the answer is {}'.format(
-                                                 message.author.mention,
-                                                 right_answer))
+                embed = generate_spelling_result(lang,
+                    custom_answers, random_question, message.author.mention,
+                    right_answer, meaning, example, 'time-out', pronounce)
                 await mess.edit(embed=embed)
             else:
                 # if the user reacted something,
                 # if the answer is wrong we have to wait for 10 secs
                 if reaction.emoji != right_answer: # if it is a wrong answer
-                    result = generate_spelling_result(
-                        custom_answers, random_question)
-                    embed=discord.Embed(colour=0xfa031c)
-                    embed.add_field(name="Vietnamese spelling "
-                                         "quick question in 10s\n"
-                                         "Which one is correct?",
-                                    value=result+'\n{}, nope, it\'s {}'.format(
-                                        message.author.mention, right_answer))
+                    embed = generate_spelling_result(lang,
+                        custom_answers, random_question, message.author.mention,
+                        right_answer, meaning, example, 'wrong', pronounce)
                     await mess.edit(embed=embed)
                 else: # if it is right
-                    result = generate_spelling_result(
-                        custom_answers, random_question)
-                    embed=discord.Embed(colour=0x09e30d)
-                    embed.add_field(name="Vietnamese spelling "
-                                         "quick question in 10s\n"
-                                         "Which one is correct?",
-                                    value=result+'\n{}, you are '
-                                                 'absolutely right!'.format(
-                                        message.author.mention
-                                    ))
+                    embed = generate_spelling_result(lang,
+                        custom_answers, random_question, message.author.mention,
+                        right_answer, meaning, example, 'right', pronounce)
                     await mess.edit(embed=embed)
             
                     

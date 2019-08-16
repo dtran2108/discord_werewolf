@@ -11,7 +11,40 @@ def embed_message(author, color, name, value, thumbnail=False, url=''):
     return embed
 
 
-def generate_spelling_result(custom_answers, random_question):
+def generate_spelling_result(lang, custom_answers, random_question, author,
+                             right_answer, meaning, example, kind, pronounce):
+    """
+    Return embed to send message to the channel
+
+    :param list custom_answers: the answers of the question
+    :param str random_question: the question as well as the answer
+    :param str author: the author who run the command
+    :param str right_answer: the right answer in unicode form
+    :param str meaning: meaning of the question
+    :param str example: use case of the question
+    :param str kind: type of the answer the author chose
+
+    :example:
+
+    >>> custom_answers = ['abc', 'def']
+    >>> random_question = 'abc'
+    >>> author = <@:123456789098>
+    >>> right_answer = 'A'
+    >>> kind = 'wrong'
+    >>> embed = generate_spelling_result(custom_answers, random_question, author, right_answer, kind)
+    >>> print(embed)
+    Vietnamese spelling quick question in 10s
+    Which one is correct?
+    **`[ A ]:` abc**
+    ~~`[ B ]:` def~~
+
+    <@:123456789098>, nope, it's A
+    """
+    if lang == 'vn':
+        heading = "Vietnamese"
+    elif lang == 'en':
+        heading = "English"
+    heading += " spelling quick question in 10s\nWhich one is correct?"
     i, result = 0, ''
     for answer in custom_answers:
         if answer == random_question:
@@ -20,7 +53,23 @@ def generate_spelling_result(custom_answers, random_question):
         else:
             result +=  '~~`[ {} ]:` {}\n~~'.format(ascii_uppercase[i], answer)
             i += 1
-    return result
+    def _generate_embed(color):
+        embed=discord.Embed(colour=color)
+        value = '**Pronounce**: {}\n{}'.format(pronounce, result) if pronounce else result
+        embed.add_field(name=heading, value=value, inline=False)
+        embed.add_field(name="Meaning", value=meaning, inline=False)
+        embed.add_field(name="Example",value=example, inline=False)
+        return embed
+    if kind == 'wrong':
+        result += '\n{}, nope, it\'s {}\n'.format(author, right_answer)
+        embed = _generate_embed(0xfa031c)
+    elif kind == 'right':
+        result += '\n{}, you are absolutely right!\n'.format(author)
+        embed = _generate_embed(0x09e30d)
+    elif kind == 'time-out':
+        result += '\n{}, time out!, the answer is {}\n'.format(author, right_answer)
+        embed = _generate_embed(0xfa031c)
+    return embed
 
 
 def generate_help_message(message, emojis):
@@ -73,8 +122,8 @@ def generate_help_message(message, emojis):
             inline=True
         )
         embed.add_field(
-            name=':pencil: $chinhta | $cta',
-            value="`Check your Vietnamese\nspellings`",
+            name=':pencil: $spell | $spelling',
+            value="`Check your spellings\n$spell vn | $spell en`",
             inline=True
         )
         # footer

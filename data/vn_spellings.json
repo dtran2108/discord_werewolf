@@ -1,0 +1,355 @@
+{
+    "Lả lơi": {
+        "answers": [
+            "Lả lơi",
+            "Lã lơi"
+        ],
+        "meaning": "Thiếu đứng đắn trong quan hệ nam nữ",
+        "example": "Trăng nằm sóng soải trên cành liễu,\nđợi gió đông về để **lả lơi**\n- _Hàn Mặc Tử_"
+    },
+    "Gà dờ": {
+        "answers": [
+            "Gà dờ",
+            "Gà vờ"
+        ],
+        "meaning": "Người đần độn, ngốc nghếch",
+        "example": "**Gà dờ** như nó biết gì mà giao việc"
+    },
+    "ga xép": {
+        "answers": [
+            "ga xép",
+            "ga sép",
+            "ga xếp",
+            "ga sếp"
+        ],
+        "meaning": "Ga nhỏ, các tàu tốc hành không đỗ lại",
+        "example": "Cạnh **ga xép** có cái chợ nhỏ"
+    },
+    "Khuôn khổ": {
+        "answers": [
+            "Khuôn khổ",
+            "Khuông khổ",
+            "Khuôn khỗ",
+            "Khuông khỗ"
+        ],
+        "meaning": "Phạm vi được ấn định, hình dạng, kích thước",
+        "example": "Đưa mọi việc vào khuôn khổ"
+    },
+    "Sổ mũi": {
+        "answers": [
+            "Xổ mũi",
+            "Sổ mũi",
+            "Xỗ mủi",
+            "Sổ mủi"
+        ],
+        "meaning": "Mắc bệnh chảy nước mũi khi gặp lạnh",
+        "example": "Dạo này cứ sổ mũi tức ghê"
+    },
+    "Thúc giục": {
+        "answers": [
+            "Thúc giục",
+            "Thúc dục",
+            "Thút giục",
+            "Thút dụt"
+        ],
+        "meaning": "Như giục giã (nghĩa mạnh hơn): giục liên tiếp",
+        "example": "Tiếng trống thúc giục liên hồi"
+    },
+    "Vương miện": {
+        "answers": [
+            "Vương miệng",
+            "Vươn miện",
+            "Vươn miệng",
+            "Vương miện"
+        ],
+        "meaning": "Mũ vua đội, mũ cho người đoạt giải nhất trong cuộc thi người đẹp",
+        "example": "Vương miện hoa hậu"
+    },
+    "Vàng ròng": {
+        "answers": [
+            "Vàng ròng",
+            "Vàng dòng",
+            "Vàn dòng",
+            "Vàn ròng"
+        ],
+        "meaning": "Vàng có độ tinh khiết cao",
+        "example": "Anh ấy cầu hôn tôi bằng chiếc nhẫn vàng ròng"
+    },
+    "Sốt sắng": {
+        "answers": [
+            "Sốt sắng",
+            "Xốt xắng",
+            "Sốt xắn", 
+            "Xốt sắn"
+        ],
+        "meaning": "Nhiệt tình với công việc",
+        "example": "Anh ta **sốt sắng** nhận nhiệm vụ"
+    },
+    "Sửa chữa": {
+        "answers": [
+            "Sửa chữa",
+            "Sữa chữa",
+            "Xữa chửa",
+            "Sửa chửa"
+        ],
+        "meaning": "Làm cho hết những chỗ hư hỏng, sai sót trởi lại bình thường hoặc tốt hơn",
+        "example": "Mai tui đem chiếc xe này đi **sửa chữa**"
+    }, 
+    "Xán lạn": {
+        "answers": [
+            "Xán lạn",
+            "Sáng lạn",
+            "Sáng lạng",
+            "Xáng lạng"
+        ],
+        "meaning": "Rực rỡ, huy hoàng",
+        "example": "Tương lai **xán lạn**"
+    },
+    "cọ xát": {
+        "answers": [
+            "cọ xát",
+            "cọ sát"
+        ],
+        "meaning": "Áp vào, chà đi chà lại, tiếp xúc với thử thách trong cuộc sống",
+        "example": "Anh ấy có nhiều cơ hội **cọ xát** với thực tế"
+    },
+    "giành giật": {
+        "answers": [
+            "giành giật",
+            "dành giật",
+            "dành dật",
+            "giành dật"
+        ],
+        "meaning": "giành đi giành lại để quyết chiếm lấy",
+        "example": "Giọng the thé chanh chua là lúc **giành giật** chỗ bày hàng hay đanh đá chửi bới là vì bị tranh mất khách"
+    },
+    "Bổ sung": {
+        "answers": [
+            "Bổ sung",
+            "Bổ xung",
+            "Bỗ sung"
+        ],
+        "meaning": "Thêm vào cho đầy đủ",
+        "example": "**Bổ sung** hồ sơ cho hợp lệ"
+    },
+    "trau dồi": {
+        "answers": [
+            "trau dồi",
+            "trao dồi"
+        ],
+        "meaning": "Làm cho phẩm giá con người ngày càng tốt hơn",
+        "example": "**Trau dồi** kiến thức"
+    },
+    "rong ruổi": {
+        "answers": [
+            "rong ruổi",
+            "rong ruỗi"
+        ],
+        "meaning": "Đi liên tục",
+        "example": "Rong ruổi trên đường"
+    },
+    "vững chãi": {
+        "answers": [
+            "vững chãi",
+            "vững trải",
+            "dững chãi"
+        ],
+        "meaning": "Có tác động từ bên ngoài mà không lung lay, đổ ngã",
+        "example": "Bức tường thành **vững chãi**"
+    },
+    "Gỡ gạc": {
+        "answers": [
+            "Gỡ gạc",
+            "Gỡ gạt"
+        ],
+        "meaning": "Tìm cách lấy lại phần nào",
+        "example": "Chơi một trận lớn nhằm **gỡ gạc**"
+    },
+    "Chẩn đoán": {
+        "answers": [
+            "Chuẩn đoán",
+            "Chẩn đoán",
+            "Chẩn đán",
+            "Chuẩn đán"
+        ],
+        "meaning": "Xác định bệnh và kết quả xét nghiệm để tìm ra hướng điều trị",
+        "example": "**Chẩn đoán** đúng cho nên điều trị hiệu quả"
+    },
+    "Tham quan": {
+        "answers": [
+            "Tham quan",
+            "Thăm quan"
+        ],
+        "meaning": "Xem tận mắt để hiểu biết them kinh nghiệm",
+        "example": "Hôm qua tôi đi tham quan hầm mỏ"
+    },
+    "Kết cục": {
+        "answers": [
+            "Kết cục",
+            "Kết cuộc"
+        ],
+        "meaning": "Kết quả cuối cùng của một công việc, kết thúc, kết liễu",
+        "example": "Một **kết cục** buồn"
+    },
+    "Nghe phong thanh": {
+        "answers": [
+            "Nghe phong thanh",
+            "Nghe phong phanh"
+        ],
+        "meaning": "Nghe đồn",
+        "example": "**Nghe phong thanh** Dương Chân được thông thạo 7 Teemo"
+    },
+    "Bắt chước": {
+        "answers": [
+            "Bắt chước",
+            "Bắt chiếc"
+        ],
+        "meaning": "Làm theo cách của người khác",
+        "example": "Thằng bé nhà tôi hay **bắt chước** bố nó"
+    },
+    "Khoảng không": {
+        "answers": [
+            "Khoảng không",
+            "Khoản không"
+        ],
+        "meaning": "Chỗ không gian trống từ mặt đất trở lên không bị giới hạn bởi vật gì",
+        "example": "Những chiếc roi quất như những vệt chớp đỏ lòe huơ mạnh, vút vào **khoảng không** thành tiếng đen đét, sắt nhọn, đầy đe dọa"
+    },
+    "Số chẵn": {
+        "answers": [
+            "Số chẵn",
+            "Số chẳn"
+        ],
+        "meaning": "Số chia hết cho 2",
+        "example": "Updating"
+    },
+    "Số lẻ": {
+        "answers": [
+            "Số lẻ",
+            "Số lẽ"
+        ],
+        "meaning": "Số không chia hết cho 2",
+        "example": "Updating"
+    },
+    "Nhạt nhẽo": {
+        "answers": [
+            "Nhạt nhẽo",
+            "Nhạt nhẻo"
+        ],
+        "meaning": "Nhạt đến mức vô vị",
+        "example": "**Thúy Quỳnh**"
+    },
+    "Hội chứng": {
+        "answers": [
+            "Hội chứng",
+            "Hội trứng"
+        ],
+        "meaning": "Các triệu chứng cùng xuất hiện của bệnh",
+        "example": "**Hội chứng** hang bao gồm các triệu chứng lâm sàng gây nên bởi sự có mặt của một hoặc nhiều hàng trong nhu phổi đã thải ra ngoài qua phế nang"
+    },
+    "Chau mày": {
+        "answers": [
+            "Trau mày",
+            "Chau mày",
+            "Chao mày"
+        ],
+        "meaning": "Nhíu lông mày lại tỏ vẻ buồn bực hoặc suy nghĩ",
+        "example": "Tôi **chau mày** trầm ngâm nghĩ về tương lai"
+    },
+    "Lắp ráp": {
+        "answers": [
+            "Lắp ráp",
+            "Lắp dáp"
+        ],
+        "meaning": "Đặt các bộ phận vào đúng chỗ để máy có thể chạy được",
+        "example": "**Lắp ráp** các linh kiện điện tử"
+    },
+    "Chim chích": {
+        "answers": [
+            "Chim chích",
+            "Chim trích"
+        ],
+        "meaning": "Chim nhỏ, ăn sâu bọ",
+        "example": "Ô kìa, một chiếc tổ **chim chích**"
+    },
+    "miễn cưỡng": {
+        "answers": [
+            "miễn cưỡng",
+            "miễn cưởng"
+        ],
+        "meaning": "Buộc phải làm việc mà mình không thích",
+        "example": "Tôi đã **miễn cưỡng** yêu anh"
+    },
+    "Ăn cá nhả xương, ăn đường nuốt chậm": {
+        "answers": [
+            "Ăn cá nhả xương, ăn đường nuốt chậm",
+            "Ăn cá nhã xương, ăn đường nuốt chậm"
+        ],
+        "meaning": "Không nên ăn uống gấp gáp, nếu không sẽ gây ra những hậu quả nguy hiểm",
+        "example": "Updating"
+    },
+    "Ăn dầm, nằm dề": {
+        "answers": [
+            "Ăn dầm, nằm dề",
+            "Ăn dầm, nằm về"
+        ],
+        "meaning": "Ở lỳ một nơi đến bị đuổi vẫn không chịu đi",
+        "example": "Updating"
+    },
+    "Ăn cơm có canh như tu hành có bạn": {
+        "answers": [
+            "Ăn cơm có canh như tu hành có bạn",
+            "Ăn cơm có rau như tu hành có bạn"
+        ],
+        "meaning": "Nên ăn uống healthy",
+        "example": "Updating"
+    },
+    "Ăn cơm không rau như nhà giàu chết không nhạc": {
+        "answers": [
+            "Ăn cơm không rau như nhà giàu chết không nhạc",
+            "Ăn cơm không canh như nhà giàu chết không nhạc"
+        ],
+        "meaning": "Nên ăn uống healthy",
+        "example": "Updating"
+    },
+    "Ăn cây nào, rào cây nấy": {
+        "answers": [
+            "Ăn cây nào, rào cây nấy",
+            "Ăn cây nào, gào cây nấy"
+        ],
+        "meaning": "Khi nhận được sự giúp đỡ hoặc hưởng thành quả từ bất kỳ ai, ta cần biết đền ơn đáp nghĩa, biết trân trọng, cảm tạ người đã cho ta những điều ấy.",
+        "example": "Updating"
+    },
+    "Ăn một bát cháo, chạy ba quảng đồng": {
+        "answers": [
+            "Ăn một bát cháo, chạy ba quảng đồng",
+            "Ăn một bát cháo, chạy ba quản đồng"
+        ],
+        "meaning": "Không nên chỉ vì một cái lợi nhỏ trước mắt hoặc những thứ nhỏ bé, không đáng mà đánh đổi  bằng thời gian, công sức, tâm trí quý giá của chúng ta.",
+        "example": "Updating"
+    },
+    "Bao giờ cho khỉ đeo hoa\nCho voi đánh sáp, cho gà nhuộm răng": {
+        "answers": [
+            "Bao giờ cho khỉ đeo hoa\nCho voi đánh sáp, cho gà nhuộm răng",
+            "Bao giờ cho khỉ đeo hoa\nCho voi đánh xáp, cho gà nhuộm răng"
+        ],
+        "meaning": "Diễn tả việc khó có thể xảy ra, khó ngờ tới, khó tin",
+        "example": "- Ê chừng nào Thúy Quỳnh hết sai chính tả?\n- Bao giờ cho khỉ đeo hoa\nCho voi đánh sáp, cho gà nhuộm răng"
+    },
+    "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen sì": {
+        "answers": [
+            "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen sì",
+            "Còn cha gót đỏ như son\nMất cha gót mẹ gót con đen xì"
+        ],
+        "meaning": "Qua ý nghĩa câu ca dao trên, ta có thể thấy được trách nhiệm và vị trí của người cha đóng vai trò quan trọng như thế nào đối với cuộc đời con. Vì vậy, dù mai đây trên vạn nẻo đường đời, mong rằng các người con đừng bao giờ lãng quên một điều, cuộc sống của ta có được hôm nay là do sự đắp xây và đánh đổi bằng cả cuộc đời hy sinh thầm lặng của cha, từng nhịp thở, từng bước chân ta luôn có sự hiện diện của cha trong đó.",
+        "example": "Updating"
+    },
+    "Mấy đời bánh đúc có xương\nMấy đời dì ghẻ mà thương con chồng": {
+        "answers": [
+            "Mấy đời bánh đúc có xương\nMấy đời dì ghẻ mà thương con chồng",
+            "Mấy đời bánh đúc có xương\nMấy đời dì ghẽ mà thương con chồng"
+            ],
+        "meaning": "Tình cảm của mẹ kế dành cho con của chồng sẽ không mặn mà , sâu sắc. Theo quan niệm xưa hay trong các câu chuyện cổ tích thì mẹ kế là người độc ác với con chồng luôn hắt hủi , ghét con chồng vì đó không phải là con của họ không do họ giứt ruột đẻ ra. Thực ra quan niệm này không hoàn toàn đúng đắn về ý nghĩa , không phải dì ghẻ nào cũng ghét con chồng cả đâu. Mình hiểu chỉ có vậy , thấy ok thì thanks phát nhá !",
+        "example": "Updating"
+    }
+}
