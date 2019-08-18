@@ -2,21 +2,33 @@
     "584292355138519053": {
         "name": "boo",
         "bot": true,
-        "reputation": 0
+        "coins": 0,
+        "property": {
+            "slaps": 0
+        }
     },
     "234395307759108106": {
         "name": "Groovy",
         "bot": true,
-        "reputation": 0
+        "coins": 0,
+        "property": {
+            "slaps": 0
+        }
     },
     "423461043935772682": {
         "name": "Bita k\u00fa k\u00f9",
         "bot": false,
-        "reputation": 0
+        "coins": 1012,
+        "property": {
+            "slaps": 0
+        }
     },
     "461115366693928961": {
         "name": "tuiduocderadetestbot",
         "bot": false,
-        "reputation": 0
+        "coins": 0,
+        "property": {
+            "slaps": 0
+        }
     }
 }

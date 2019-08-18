@@ -53,23 +53,19 @@ class MyBoo(discord.Client):
 
         # create the background tasks and run it in the background
         self.bg_send_news = self.loop.create_task(self.send_news())
-        self.bg_update_users = self.loop.create_task(self.update_users())
-        self.bg_load_users = self.loop.create_task(self.load_users())
 
     async def on_ready(self):
         logger.info('We have logged in as {}'.format(self.user))
         games = ["with the leaves", "with fire", "with you", "with your heart"]
         game = discord.Game(name=random.choice(games))
         await self.change_presence(status=discord.Status.online, activity=game)
-    
-    async def update_users(self):
-        await self.wait_until_ready()
-        try:
-            while not self.is_closed():
-                dump_json_to_file('user', self.users, 'data/users.json')
-                await asyncio.sleep(2) # task run every two seconds
-        except Exception as e:
-            logger.error('An error occur while updating users: {}'.format(e))
+
+    def update_users(self, old_user=False):
+        if not old_user:
+            dump_json_to_file('user', self.users, 'data/server_data/users.json')
+        else:
+            dump_json_to_file('user', self._users, 'data/server_data/users.json', True)
+        self._users = parse_json_file('data/server_data/users.json')
     
     def update_emo(self):
         try:
@@ -87,15 +83,6 @@ class MyBoo(discord.Client):
             logger.error('An error occur while loading emojis: {}'.format(e))
         else:
             logger.info('Successfully loaded emojis from the background')
-    
-    async def load_users(self):
-        await self.wait_until_ready()
-        try:
-            while not self.is_closed():
-                self._users = parse_json_file('data/server_data/users.json')
-                await asyncio.sleep(1) # task run every second
-        except Exception as e:
-            logger.error('An error occur while updating users: {}'.format(e))
     
     async def send_news(self):
         await self.wait_until_ready()
@@ -123,6 +110,12 @@ class MyBoo(discord.Client):
         is_staff = 602501937685987378 in [role.id for role in message.author.roles]
         if message.author == client.user:
             return
+
+        # update user's data
+        elif message.content.startswith('$userup') and is_staff:
+            logger.info('Updating users')
+            self.update_users()
+            logger.info('Successfully updated users')
 
         # send release notes to announce channel (for dev only)
         elif message.content.startswith('$release') and is_staff:
@@ -464,6 +457,13 @@ class MyBoo(discord.Client):
                     embed = generate_spelling_result(lang,
                         custom_answers, random_question, message.author.mention,
                         right_answer, meaning, example, 'right', pronounce)
+                    self._users[str(message.author.id)]['coins'] += 10
+                    self.update_users(True)
+                    embed.add_field(name="Congratulations",
+                                    value="You now have **`{:,}`** {}".format(
+                        self._users[str(message.author.id)]['coins'],
+                        self._emojis["bocoin"]
+                    ))
                     await mess.edit(embed=embed)
             
                     
