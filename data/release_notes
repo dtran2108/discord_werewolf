@@ -6,14 +6,17 @@ Boo is a discord bot brings joy to people
 **What’s new in version 1.0.0?**
 •   Whole new commands.
 •   Add data through developer tool.
-•   Everyday news.   
+•   Everyday news.
+•   Trading.
 •   AI (I think so).
 
 **Commands**     `[NEW]`
 •   `$help`: display help menu
 •   `$hi` | `$hello`: This one is the AI thing, try this!
 •   `$spell` | `$spelling`: Test yourself with Vietnamese/English spellings.
-•   `$slap`: slap someone you hate.
+•   `$slap`: Slap someone you hate.
+•   `$buy`: Buy some items at the market.
+•   `$me`: Display user's profile.
 
 **Developer Tools**     `[NEW]`
 [!] Read this carefully if you're interested in helping me import new data to the existing database, then ask me to provide you the `staff` role to access these tools.

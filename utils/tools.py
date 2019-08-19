@@ -133,8 +133,23 @@ def generate_help_message(author, message, emojis):
             value="`Check your spellings\n$spell vn | $spell en`",
             inline=True
         )
+        embed.add_field(
+            name=emojis["trade"]+' $buy',
+            value="`Buy some items\nfrom the market`",
+            inline=True
+        )
+        embed.add_field(
+            name='😎 $me',
+            value="`View your profile`",
+            inline=True
+        )
+        embed.add_field(
+            name='.',
+            value=".",
+            inline=True
+        )
         # footer
-        embed.set_footer(text="You're beautiful no matter what ❤️")
+        embed.set_footer(text="from dtran21 with ❤️")
     return embed
 
 def generate_hello_message(blessings):

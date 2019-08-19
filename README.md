@@ -7,13 +7,16 @@ Boo is a discord bot brings joy to people.
 - Whole new commands.
 - Add data through developer tools.
 - Everyday news.
+- Trading.
 - AI (I think so).
 
 ### Commands
 
 - `$hi` | `$hello`: This one is the AI thing, try this!
 - `$spell` | `$spelling`: Test yourself with Vietnamese/English spellings.
-- `$slap`: slap someone you hate
+- `$slap`: Slap someone you hate
+- `$buy`: Buy some items at the market
+- `$me`: Display user's profile.
 
 ### Developer tools
 
