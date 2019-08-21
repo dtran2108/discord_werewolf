@@ -97,7 +97,7 @@ class MyBoo(discord.Client):
             games = ["with the leaves", "with fire", "with you", "with your heart"]
             game = discord.Game(name=random.choice(games))
             await self.change_presence(status=discord.Status.online, activity=game)
-            await asyncio.sleep(5) # task run every 2 hours
+            await asyncio.sleep(7200) # task run every 2 hours
     
     async def send_news(self):
         await self.wait_until_ready()
