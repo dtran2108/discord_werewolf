@@ -58,6 +58,7 @@ class MyBoo(discord.Client):
 
         # create the background tasks and run it in the background
         self.bg_send_news = self.loop.create_task(self.send_news())
+        self.bg_change_status = self.loop.create_task(self.change_status())
 
     async def on_ready(self):
         logger.info('We have logged in as {}'.format(self.user))
@@ -88,6 +89,15 @@ class MyBoo(discord.Client):
             logger.error('An error occur while loading emojis: {}'.format(e))
         else:
             logger.info('Successfully loaded emojis from the background')
+
+    async def change_status(self):
+        await self.wait_until_ready()
+        while not self.is_closed():
+            logger.info('Changing status in background')
+            games = ["with the leaves", "with fire", "with you", "with your heart"]
+            game = discord.Game(name=random.choice(games))
+            await self.change_presence(status=discord.Status.online, activity=game)
+            await asyncio.sleep(5) # task run every 2 hours
     
     async def send_news(self):
         await self.wait_until_ready()
