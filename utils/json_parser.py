@@ -26,11 +26,11 @@ def dump_json_to_file(data_type, json_data, destination_file, exist=False):
             for user in json_data:
                 # if user already in data and didn't change his name
                 if str(user.id) in old_users\
-                and old_users[user.id]["name"] == user.name:
+                and old_users[str(user.id)]["name"] == user.name:
                     continue
                 # if the user still in data but change their name
                 elif str(user.id) in old_users:
-                    old_users[user.id]["name"] = user.name
+                    old_users[str(user.id)]["name"] = user.name
                 else: # if this is a new user
                     user_dict = {}
                     user_dict['name'] = user.name
@@ -38,7 +38,7 @@ def dump_json_to_file(data_type, json_data, destination_file, exist=False):
                     user_dict['coins'] = 0
                     user_dict['property'] = {}
                     user_dict['property']['slaps'] = 0
-                    old_users[user.id] = user_dict
+                    old_users[str(user.id)] = user_dict
             data = json.dumps(old_users, indent=4)
     # write data to destination file
     with open(destination_file, 'w+') as f:
