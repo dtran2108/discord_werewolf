@@ -1,4 +1,6 @@
-discord.py==0.16.12
 aiohttp
-websockets
 chardet
+colorlog
+discord.py==1.2.3
+feedparser
+websockets

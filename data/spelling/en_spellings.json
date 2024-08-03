@@ -1,0 +1,95 @@
+{
+    "malicious": {
+        "answers": [
+            "malicous",
+            "malecious",
+            "malicious"
+        ],
+        "pronounce": "/m\u0259\u02c8l\u026a\u0283.\u0259s/",
+        "meaning": "  \u2023  _adjective_ : intended to harm or upset other people",
+        "example": "He complained that he'd been receiving **malicious** phone calls."
+    },
+    "despicable": {
+        "answers": [
+            "despicable",
+            "depicable",
+            "despicaple",
+            "desbicable"
+        ],
+        "pronounce": "/d\u026a\u02c8sp\u026ak.\u0259.b\u0259l/",
+        "meaning": "  \u2023  _adjective_ : very unpleasant or bad, causing strong feelings of dislike",
+        "example": "He's a **despicable** human being!"
+    },
+    "abominable": {
+        "answers": [
+            "abominable",
+            "abominaple",
+            "apominable",
+            "abominabel"
+        ],
+        "pronounce": "/\u0259\u02c8b\u0251\u02d0.m\u0259.n\u0259.b\u0259l/",
+        "meaning": "  \u2023  _adjective_ : very bad or unpleasant",
+        "example": "The prisoners are forced to live in **abominable** conditions."
+    },
+    "issue": {
+        "answers": [
+            "isue",
+            "issue",
+            "issu"
+        ],
+        "pronounce": "/\u02c8\u026a\u0283.u\u02d0/",
+        "meaning": "  \u2023  _noun_ : a subject or problem that people are thinking and talking about\n  \u2023  _verb_ : to produce or provide something official",
+        "example": "  \u2023  _noun_ : don't worry about who will do it - that's just a side **issue** _(= not the main problem)_\n  \u2023  _verb_ : the office will be **issuing** permits on Tuesday and Thursday mornings."
+    },
+    "attitude": {
+        "answers": [
+            "atitude",
+            "attitude",
+            "attitue",
+            "attitiu"
+        ],
+        "pronounce": "/\u02c8\u00e6t\u032c.\u0259.tu\u02d0d/",
+        "meaning": "  \u2023  _noun_ : a feeling or opinion about something or someone, or a way of behaving that is caused by this.",
+        "example": "Her **attitude** has definitely changed for the better since she started this new job."
+    },
+    "sarcasm": {
+        "answers": [
+            "sacasm",
+            "sarcasm",
+            "sarcasim",
+            "sarcarsm"
+        ],
+        "pronounce": "/\u02c8s\u0251\u02d0r.k\u00e6z.\u0259m/",
+        "meaning": "  \u2023  _noun_ : the use of remarks that clearly mean the opposite of what they say, made in order to hurt someone's feelings or to criticize something in a humorous way.",
+        "example": "\"You have been working hard,\" he said with heavy **sarcasm**, as he looked at the empty page."
+    },
+    "broadside": {
+        "answers": [
+            "bradside",
+            "broadside",
+            "broatside",
+            "boadside"
+        ],
+        "pronounce": "/\u02c8br\u0251\u02d0d.sa\u026ad/",
+        "meaning": "  \u2023  _noun_ : a strong written or spoken attack (on someone)\n  \u2023  _adverb_ : with a side facing something",
+        "example": "  \u2023  _noun_ : the candidate fired/launched yet another **broadside** at the president.\n  \u2023  _adverb_ : the car was hit **broadside**. The front and rear were undamaged"
+    },
+    "engage": {
+        "answers": [
+            "engage",
+            "engace"
+        ],
+        "meaning": "  \u2023  _verb_ : to employ someone",
+        "example": "I have engaged a secretary to deal with all my paperwork.",
+        "pronounce": "/\u026an\u02c8\u0261e\u026ad\u0292/"
+    },
+    "permaculture": {
+        "answers": [
+            "permaculture",
+            "purmaculture"
+        ],
+        "meaning": "  \u2023  noun : An approach to life and growing food that copies the way things happen in nature in order to create ways for people to live without damaging the environment",
+        "example": "The garden utilizes organic and permaculture gardening principles.",
+        "pronounce": "/\u02c8p\u025c\u02d0rm\u0259k\u028clt\u0283\u0259r/"
+    }
+}
